@@ -1,0 +1,30 @@
+- term: Claude Code
+  meaning: Claude working in your project folder. It can read files, write code and run commands, with your permission.
+  comparison: A colleague at your keyboard who asks before touching anything.
+- term: CLAUDE.md
+  meaning: A file of rules and context Claude reads at the start of every session.
+  comparison: The team handbook.
+- term: Subagent
+  meaning: A specialist with its own instructions, tools and focus.
+  comparison: A teammate with one job they're great at.
+- term: Skill
+  meaning: A saved playbook Claude can follow, often started with a slash command like /golden-loop.
+  comparison: A recipe card.
+- term: Hook
+  meaning: A rule that runs automatically at a set moment, every time.
+  comparison: A smoke alarm. You don't switch it on, it's always watching.
+- term: Plan mode
+  meaning: Claude explains its plan and waits before changing anything. Press Shift+Tab to turn it on.
+  comparison: Measure twice, cut once.
+- term: CDP template
+  meaning: Defra's ready-made starting point for a service, with hosting, logging and pipelines already set up.
+  comparison: A house kit with the plumbing already in.
+- term: GOV.UK Frontend
+  meaning: The tested, accessible building blocks for government pages, such as buttons, radios and error messages.
+  comparison: Building bricks that already meet building regulations.
+- term: Test
+  meaning: A small program that checks one thing works, and fails if it breaks.
+  comparison: A checklist that ticks itself.
+- term: Golden loop
+  meaning: "The way every feature is built: story, failing test, build, check, then you approve."
+  comparison: Check the smoke alarm beeps before you trust it.

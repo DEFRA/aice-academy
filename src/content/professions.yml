@@ -1,0 +1,31 @@
+# Profession tracks. Each mission's `lead` list uses these ids.
+- id: product-delivery
+  name: Product and delivery
+  stretch: Write a "Later" roadmap and success measures for version 2.
+- id: business-analysis
+  name: Business analysis
+  stretch: Add acceptance criteria for every edge case you can find.
+- id: interaction-design
+  name: Interaction design
+  stretch: Try the AICE interaction designer plugin.
+- id: content-design
+  name: Content design
+  stretch: Make the content-designer agent stricter and test it.
+- id: user-research
+  name: User research
+  stretch: Test your service with two colleagues and feed the findings back.
+- id: software-development
+  name: Software development
+  stretch: Add Playwright and axe tests to the pipeline.
+- id: testing
+  name: Testing
+  stretch: Add tests for every error message and branch.
+- id: architecture
+  name: Architecture
+  stretch: Sketch how this service would expose an agent-ready (MCP) interface.
+- id: data
+  name: Data
+  stretch: Design what the team would need to report on from the saved data.
+- id: policy-operations
+  name: Policy and operations
+  stretch: Write the advice for injured hedgehogs and check it with an expert.

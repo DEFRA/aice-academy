@@ -44,7 +44,7 @@ export const config = convict({
   serviceName: {
     doc: 'Applications Service Name',
     format: String,
-    default: 'aice-academy'
+    default: 'AICE Academy'
   },
   root: {
     doc: 'Project root',

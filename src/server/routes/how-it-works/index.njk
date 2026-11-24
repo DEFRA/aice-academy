@@ -3,16 +3,14 @@
 {% block content %}
   {{ appHeading({
     text: heading,
-    caption: "aice-academy"
+    caption: "AICE Academy"
   }) }}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <div class="govuk-body" data-testid="app-page-body">
-        <p>
-        </p>
+      <div data-testid="app-page-body">
+        {{ contentHtml | safe }}
       </div>
     </div>
   </div>
-
 {% endblock %}

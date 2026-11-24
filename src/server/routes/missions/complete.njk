@@ -1,0 +1,29 @@
+{% extends 'layouts/page.njk' %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukPanel({
+        titleText: "Mission " + mission.number + " complete",
+        html: "Badge earned<br><strong>" + (mission.badge | escape) + "</strong>"
+      }) }}
+
+      <p class="govuk-body">You have completed {{ completedCount }} of {{ missionCount }} missions.</p>
+
+      {% if hasGraduated %}
+        <h2 class="govuk-heading-m">You've graduated</h2>
+        <p class="govuk-body">You're an AI-native builder. Bring the golden loop to your real team: start with one story.</p>
+        {{ govukButton({ text: "See all your badges", href: "/missions" }) }}
+      {% elif nextMission %}
+        <h2 class="govuk-heading-m">What's next</h2>
+        <p class="govuk-body">Mission {{ nextMission.number }}: {{ nextMission.title }}.</p>
+        {{ govukButton({ text: "Start the next mission", href: "/missions/" + nextMission.slug }) }}
+      {% endif %}
+
+      <p class="govuk-body"><a href="/missions" class="govuk-link">Back to your missions</a></p>
+    </div>
+  </div>
+{% endblock %}

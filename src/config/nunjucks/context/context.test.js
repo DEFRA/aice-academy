@@ -68,11 +68,21 @@ describe('context and cache', () => {
             },
             {
               current: false,
-              text: 'About',
-              href: '/about'
+              text: 'Missions',
+              href: '/missions'
+            },
+            {
+              current: false,
+              text: 'How it works',
+              href: '/how-it-works'
+            },
+            {
+              current: false,
+              text: 'Glossary',
+              href: '/glossary'
             }
           ],
-          serviceName: 'aice-academy',
+          serviceName: 'AICE Academy',
           serviceUrl: '/'
         })
       })
@@ -157,11 +167,21 @@ describe('context and cache', () => {
             },
             {
               current: false,
-              text: 'About',
-              href: '/about'
+              text: 'Missions',
+              href: '/missions'
+            },
+            {
+              current: false,
+              text: 'How it works',
+              href: '/how-it-works'
+            },
+            {
+              current: false,
+              text: 'Glossary',
+              href: '/glossary'
             }
           ],
-          serviceName: 'aice-academy',
+          serviceName: 'AICE Academy',
           serviceUrl: '/'
         })
       })

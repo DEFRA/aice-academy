@@ -1,10 +1,79 @@
+<<<<<<< your version
 # aice-academy
+=======
+# AICE Academy
+>>>>>>> academy
 
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_aice-academy&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=DEFRA_aice-academy)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_aice-academy&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DEFRA_aice-academy)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_aice-academy&metric=coverage)](https://sonarcloud.io/summary/new_code?id=DEFRA_aice-academy)
 
-Core delivery platform Node.js Frontend Template.
+An internal Defra service from the AI Capability and Enablement team (AICE). It takes people from any profession through ten missions to build a working GOV.UK service on the Core Delivery Platform (CDP), with Claude and a team of AI agents.
+
+Built on `cdp-node-frontend-template` v0.15.0 and following its structure and patterns.
+
+- [What the service does](#what-the-service-does)
+- [How the code is organised](#how-the-code-is-organised)
+- [Editing content](#editing-content)
+- [Working on this repo with Claude Code](#working-on-this-repo-with-claude-code)
+- [Alpha limitations and next steps](#alpha-limitations-and-next-steps)
+
+## What the service does
+
+| Page                   | Path                        | GOV.UK components                                                    |
+| ---------------------- | --------------------------- | -------------------------------------------------------------------- |
+| Start page             | `/`                         | Start button, inset text                                             |
+| Choose your profession | `/profession`               | Radios, error summary                                                |
+| Your missions          | `/missions`                 | Task list, tags, panel on graduation                                 |
+| A mission              | `/missions/{slug}`          | Summary list, inset text, checkboxes, character count, error summary |
+| Mission complete       | `/missions/{slug}/complete` | Panel                                                                |
+| How it works           | `/how-it-works`             | Rendered from markdown                                               |
+| Glossary               | `/glossary`                 | Summary list                                                         |
+
+Learners choose a profession, work through missions, tick the checks that prove each mission worked, add an optional team huddle answer and earn a badge. Their profession decides which missions they lead and their stretch challenges.
+
+## How the code is organised
+
+The service follows the template's layout. Each feature is a route plugin in `src/server/routes/<feature>/` with `index.js`, `controller.js`, `controller.test.js` and its views, registered in `src/server/plugins/router.js`.
+
+| Path                                       | What it does                                                                        |
+| ------------------------------------------ | ----------------------------------------------------------------------------------- |
+| `src/content/`                             | All learner-facing content: missions, professions, glossary and pages               |
+| `src/server/common/helpers/content/`       | Loads and validates content; renders markdown to sanitised HTML with GOV.UK classes |
+| `src/server/common/helpers/progress.js`    | Learner progress, held in the session (`request.yar`)                               |
+| `src/server/common/helpers/form-errors.js` | Turns Joi errors into GOV.UK error summary and field errors                         |
+| `src/server/routes/`                       | `home`, `profession`, `missions`, `how-it-works`, `glossary`                        |
+| `test-helpers/session-helpers.js`          | Simulates a browser session (cookies and CSRF crumb) in route tests                 |
+
+Dependencies added to the template: `marked` and `sanitize-html` (markdown is always sanitised, in line with Defra's AI SDLC conventions), `yaml` (front matter and content files) and `@hapi/boom` (page not found).
+
+## Editing content
+
+Content designers can change the academy without touching code.
+
+- **Missions** live in `src/content/missions/`, one markdown file each. The front matter holds the structured parts (title, badge, prompts, checks, huddle question and the professions that lead it). The body holds extra sections such as "Owner checkpoint". Content is validated when the service starts, and the tests check every mission.
+- **Professions** are in `src/content/professions.yml`. Each mission's `lead` list uses their ids.
+- **Glossary** terms are in `src/content/glossary.yml`.
+- **Pages** such as "How it works" are markdown in `src/content/pages/`.
+- **The AI team** on the home page is in `src/content/team.yml`.
+- **The learner starter kit** is in `starter-kit/`. Learners copy it with `cp -R ../aice-academy/starter-kit/. .`, so don't add a README at its root (it would overwrite theirs). Its README is `starter-kit/academy/README.md`.
+
+Run `npm test` after any content change.
+
+## Working on this repo with Claude Code
+
+This repo uses the AICE Academy starter kit itself. `CLAUDE.md` is the team handbook, `.claude/agents/` holds the specialist agents, `.claude/skills/` the playbooks and `.claude/hooks/` the automatic checks: related tests run after every edit and the full suite runs before Claude finishes. Start with `/golden-loop <story>`.
+
+## Alpha limitations and next steps
+
+- **Progress is held in the session only.** It is lost when the session ends. Beta adds a CDP backend service with MongoDB.
+- **No sign-in yet.** Beta adds staff sign-in. Confirm the recommended approach for internal Defra services with the CDP team.
+- **No facilitator view yet.** Beta adds a cohort dashboard with progress, stuck learners and huddle answers.
+- **Prompts can't be copied with one click.** Add a progressively enhanced copy button in `src/client/javascripts`.
+
+---
+
+# CDP Node.js Frontend Template
 
 - [Requirements](#requirements)
   - [Node.js](#nodejs)
@@ -36,7 +105,7 @@ Please install Node Version Manager [nvm](https://github.com/creationix/nvm)
 To use the correct version of Node.js for this application, via nvm:
 
 ```bash
-cd aice-academy
+cd cdp-node-frontend-template
 nvm use
 ```
 
@@ -141,18 +210,18 @@ git config --global core.autocrlf false
 
 > [!TIP]
 > For Apple Silicon users, you may need to add `--platform linux/amd64` to the `docker run` command to ensure
-> compatibility fEx: `docker build --platform=linux/arm64 --no-cache --tag aice-academy`
+> compatibility fEx: `docker build --platform=linux/arm64 --no-cache --tag cdp-node-frontend-template`
 
 Build:
 
 ```bash
-docker build --target development --no-cache --tag aice-academy:development .
+docker build --target development --no-cache --tag cdp-node-frontend-template:development .
 ```
 
 Run:
 
 ```bash
-docker run -p 3000:3000 aice-academy:development
+docker run -p 3000:3000 cdp-node-frontend-template:development
 ```
 
 ### Production image
@@ -160,13 +229,13 @@ docker run -p 3000:3000 aice-academy:development
 Build:
 
 ```bash
-docker build --no-cache --tag aice-academy .
+docker build --no-cache --tag cdp-node-frontend-template .
 ```
 
 Run:
 
 ```bash
-docker run -p 3000:3000 aice-academy
+docker run -p 3000:3000 cdp-node-frontend-template
 ```
 
 ### Docker Compose
