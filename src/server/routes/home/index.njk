@@ -1,17 +1,116 @@
 {% extends 'layouts/page.njk' %}
 
-{% block content %}
-  {{ appHeading({
-    text: heading,
-    caption: "aice-academy"
-  }) }}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <div class="govuk-body" data-testid="app-page-body">
-        <p></p>
+{% block content %}
+
+  <div class="app-masthead" data-testid="app-masthead">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l app-masthead__caption">AICE Academy</span>
+        <h1 class="govuk-heading-xl app-masthead__title">{{ heading }}</h1>
+
+        {% if isReturning %}
+          <p class="govuk-body-l app-masthead__lede" data-testid="app-welcome-back">Welcome back. You've completed {{ completedCount }} of {{ missionCount }} missions.</p>
+        {% else %}
+          <p class="govuk-body-l app-masthead__lede">Ten missions. Seven AI teammates. One working GOV.UK service on Defra's Core Delivery Platform, built by you. No coding experience needed.</p>
+        {% endif %}
+
+        {{ govukButton({
+          text: callToAction.text,
+          href: callToAction.href,
+          isStartButton: true,
+          classes: "govuk-button--inverse"
+        }) }}
+
+        <p class="govuk-body-s app-masthead__meta">About 18 to 20 hours, at your own pace or with a cohort. Open to every Defra profession.</p>
       </div>
     </div>
   </div>
 
+  <div class="govuk-grid-row" data-testid="app-stats">
+    <div class="govuk-grid-column-one-third">
+      <p class="govuk-body app-stat"><span class="app-stat__number">{{ missionCount }}</span> missions, from setup to show and tell</p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <p class="govuk-body app-stat"><span class="app-stat__number">{{ team.length }}</span> AI teammates who plan, build, test and check</p>
+    </div>
+    <div class="govuk-grid-column-one-third">
+      <p class="govuk-body app-stat"><span class="app-stat__number">1</span> working service with tests, in a pull request</p>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-l">You're the service owner. Claude is your team.</h2>
+      <p class="govuk-body">You decide what to build and whether it's good enough. Claude leads a team of specialist AI agents who write the stories, design the pages, write the code, test it and check it. Nothing goes in without your say-so.</p>
+      <p class="govuk-body">It's how Defra teams will work with AI: people setting direction and making the calls, agents doing the heavy lifting, and tests proving every step.</p>
+
+      <h2 class="govuk-heading-l">Meet your AI team</h2>
+    </div>
+  </div>
+
+  <ul class="app-team" data-testid="app-team">
+    {% for member in team %}
+      <li class="app-team__member">
+        <h3 class="app-team__name">{{ member.name }}</h3>
+        <p class="govuk-body app-team__job">{{ member.job }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body">They check each other's work. The tester never writes the code, and the reviewer never edits it.</p>
+
+      <h2 class="govuk-heading-l">How every feature gets built</h2>
+      <ol class="govuk-list govuk-list--number">
+        <li><strong>Story.</strong> Agree what to build and how you'll know it works.</li>
+        <li><strong>Test first.</strong> Write tests that fail, because the feature doesn't exist yet.</li>
+        <li><strong>Build.</strong> Make the smallest change that passes.</li>
+        <li><strong>Check.</strong> Accessibility, content and code review, all at once.</li>
+        <li><strong>You approve.</strong> Try it yourself, then commit.</li>
+      </ol>
+      <p class="govuk-body">Tests run automatically every time anything changes, so problems get caught in seconds. <a href="/how-it-works" class="govuk-link">Find out how it works</a>.</p>
+
+      <h2 class="govuk-heading-l">What you'll build</h2>
+      <p class="govuk-body"><strong>Report a hedgehog sighting</strong>: a practice service for a fictional nature recovery team planning "hedgehog highways" between gardens. Small enough to finish, real enough to matter. You'll build:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>question pages with clear error messages</li>
+        <li>a branch that gives advice when a hedgehog is injured</li>
+        <li>a check your answers page and a confirmation with a reference number</li>
+        <li>a backend service that saves every report</li>
+      </ul>
+
+      <h2 class="govuk-heading-l">What you'll take away</h2>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a working service, tested and accessible, in a pull request with a green pipeline</li>
+        <li>a way of working with AI you can use with your team on Monday</li>
+        <li>a badge for every mission, and graduation as an AI-native builder</li>
+      </ul>
+
+      <h2 class="govuk-heading-l">Made for every profession</h2>
+      <p class="govuk-body">Everyone does the same missions. Your profession decides which ones you lead and gives you stretch challenges that match your job.</p>
+      <ul class="app-tag-list" data-testid="app-professions">
+        {% for profession in professions %}
+          <li>{{ govukTag({ text: profession.name, classes: "govuk-tag--grey" }) }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="app-cta" data-testid="app-cta">
+    <h2 class="govuk-heading-l">{{ "Pick up where you left off" if isReturning else "Ready to meet your team?" }}</h2>
+    {% if isReturning %}
+      <p class="govuk-body">You've completed {{ completedCount }} of {{ missionCount }} missions. Your next one is ready when you are.</p>
+    {% else %}
+      <p class="govuk-body">Mission 0 takes about an hour and gets everything set up on your laptop.</p>
+    {% endif %}
+    {{ govukButton({
+      text: callToAction.text,
+      href: callToAction.href,
+      isStartButton: true
+    }) }}
+  </div>
 {% endblock %}

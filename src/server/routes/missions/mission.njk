@@ -1,0 +1,66 @@
+{% extends 'layouts/page.njk' %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if errorList %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errorList
+        }) }}
+      {% endif %}
+    </div>
+  </div>
+
+  {{ appHeading({
+    text: heading,
+    caption: caption
+  }) }}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if isCompleted %}
+        <p class="govuk-body">{{ govukTag({ text: "Completed", classes: "govuk-tag--green" }) }}</p>
+      {% endif %}
+
+      {% if leadTrack %}
+        {{ govukInsetText({
+          html: "<p class=\"govuk-body\">As part of the <strong>" + (leadTrack.name | escape) + "</strong> track, you lead this mission.</p><p class=\"govuk-body\">Your stretch challenge: " + (leadTrack.stretch | escape) + "</p>"
+        }) }}
+      {% endif %}
+
+      {{ govukSummaryList({ rows: summaryRows }) }}
+
+      <h2 class="govuk-heading-m">Say this to Claude</h2>
+      {% for prompt in mission.prompts %}
+        <pre class="app-code-block" data-testid="app-prompt"><code class="app-code">{{ prompt }}</code></pre>
+      {% endfor %}
+
+      <div data-testid="app-mission-body">
+        {{ mission.html | safe }}
+      </div>
+
+      <form action="/missions/{{ mission.slug }}" method="post" novalidate>
+        <input type="hidden" name="crumb" value="{{ crumb }}">
+
+        {{ govukCheckboxes(checks) }}
+
+        {{ govukCharacterCount(reflection) }}
+
+        {{ govukButton({
+          text: "Save changes" if isCompleted else "Mark mission as complete"
+        }) }}
+      </form>
+
+      <p class="govuk-body"><a href="/missions" class="govuk-link">Back to your missions</a></p>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,111 @@
+@use "govuk-frontend" as *;
+
+// Home page masthead
+.app-masthead {
+  margin-bottom: govuk-spacing(7);
+  padding: govuk-spacing(6) govuk-spacing(4) govuk-spacing(4);
+  color: govuk-functional-colour(inverse-text);
+  background-color: govuk-functional-colour(brand);
+
+  @include govuk-media-query($from: tablet) {
+    padding: govuk-spacing(8) govuk-spacing(6) govuk-spacing(6);
+  }
+}
+
+.app-masthead__caption,
+.app-masthead__title,
+.app-masthead__lede,
+.app-masthead__meta {
+  color: govuk-functional-colour(inverse-text);
+}
+
+.app-masthead__meta {
+  margin-bottom: 0;
+}
+
+// Big numbers on the home page
+.app-stat {
+  margin-bottom: govuk-spacing(6);
+  padding-top: govuk-spacing(2);
+  border-top: 5px solid govuk-functional-colour(brand);
+}
+
+.app-stat__number {
+  @include govuk-font($size: 48, $weight: bold);
+  display: block;
+}
+
+// The AI team on the home page
+.app-team {
+  margin: 0 0 govuk-spacing(6);
+  padding: 0;
+  list-style: none;
+
+  @include govuk-media-query($from: tablet) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: govuk-spacing(6);
+  }
+}
+
+.app-team__member {
+  margin-bottom: govuk-spacing(4);
+  padding-left: govuk-spacing(3);
+  border-left: 5px solid govuk-functional-colour(border);
+}
+
+.app-team__name {
+  @include govuk-font($size: 19, $weight: bold);
+  margin: 0 0 govuk-spacing(1);
+}
+
+.app-team__job {
+  margin-bottom: 0;
+}
+
+// Call to action at the end of the home page
+.app-cta {
+  margin-top: govuk-spacing(6);
+  padding: govuk-spacing(6) govuk-spacing(4) govuk-spacing(4);
+  background-color: govuk-functional-colour(surface-background);
+}
+
+// Prompts and commands learners copy
+.app-code-block {
+  @include govuk-font($size: 16);
+  margin: 0 0 govuk-spacing(4);
+  padding: govuk-spacing(3);
+  overflow-x: auto;
+  border-left: 5px solid govuk-functional-colour(border);
+  background-color: govuk-functional-colour(surface-background);
+  white-space: pre-wrap;
+}
+
+.app-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+// Badges earned on the missions page
+.app-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: govuk-spacing(2);
+}
+
+.app-badges__item {
+  margin-bottom: 0;
+}
+
+// Profession tags on the home page
+.app-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: govuk-spacing(2);
+  margin: 0 0 govuk-spacing(4);
+  padding: 0;
+  list-style: none;
+}
+
+.app-tag-list .govuk-tag {
+  max-width: none;
+}

@@ -1,0 +1,51 @@
+{% extends 'layouts/page.njk' %}
+
+{% from "govuk/components/task-list/macro.njk" import govukTaskList %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+
+{% block content %}
+  {{ appHeading({
+    text: heading,
+    caption: "AICE Academy"
+  }) }}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if hasGraduated %}
+        {{ govukPanel({
+          titleText: "You've graduated",
+          html: "You're an <strong>AI-native builder</strong>"
+        }) }}
+      {% endif %}
+
+      <p class="govuk-body" data-testid="app-progress">You have completed {{ completedCount }} of {{ missionCount }} missions.</p>
+
+      {% if profession %}
+        <p class="govuk-body" data-testid="app-track">
+          Your track: <strong>{{ profession.name }}</strong>.
+          <a href="/profession" class="govuk-link">Change<span class="govuk-visually-hidden"> your profession</span></a>
+        </p>
+      {% else %}
+        {{ govukInsetText({
+          html: '<a href="/profession" class="govuk-link">Choose your profession</a> to see which missions you lead.'
+        }) }}
+      {% endif %}
+
+      {% if badges.length %}
+        <h2 class="govuk-heading-s">Badges earned</h2>
+        <ul class="govuk-list app-badges" data-testid="app-badges">
+          {% for badge in badges %}
+            <li class="app-badges__item">{{ govukTag({ text: badge, classes: "govuk-tag--green" }) }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {{ govukTaskList({
+        idPrefix: "missions",
+        items: taskListItems
+      }) }}
+    </div>
+  </div>
+{% endblock %}

@@ -23,7 +23,7 @@ describe('#errors', () => {
     })
 
     expect(result).toEqual(
-      expect.stringContaining('Page not found | aice-academy')
+      expect.stringContaining('Page not found | AICE Academy')
     )
     expect(statusCode).toBe(statusCodes.notFound)
   })
