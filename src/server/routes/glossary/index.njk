@@ -1,18 +1,26 @@
 {% extends 'layouts/page.njk' %}
 
-{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-
 {% block content %}
   {{ appHeading({
     text: heading,
-    caption: "AICE Academy"
+    caption: "Glossary"
   }) }}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-body">Claude Code words in plain English.</p>
+      <p class="govuk-body-l">Plain-English meanings for the words you'll meet in the academy, with an everyday comparison for each.</p>
 
-      {{ govukSummaryList({ rows: rows }) }}
+      <dl class="govuk-summary-list" data-testid="app-glossary">
+        {% for item in terms %}
+          <div class="govuk-summary-list__row app-glossary__row" id="{{ item.id }}">
+            <dt class="govuk-summary-list__key">{{ item.term }}</dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">{{ item.meaning }}</p>
+              <p class="govuk-body govuk-hint">Think of it as: {{ item.comparison }}</p>
+            </dd>
+          </div>
+        {% endfor %}
+      </dl>
     </div>
   </div>
 {% endblock %}

@@ -31,7 +31,7 @@ describe('#buildCallToAction', () => {
         }
       })
     ).toEqual({
-      text: 'Continue to Mission 1',
+      text: 'Continue to Mission 2',
       href: '/missions/meet-your-team'
     })
   })
@@ -75,7 +75,7 @@ describe('#homeController', () => {
 
     expect(result).toEqual(
       expect.stringContaining(
-        'Build a real government service with an AI team |'
+        'Build a real government service, with AI as your team |'
       )
     )
     expect(statusCode).toBe(statusCodes.ok)
@@ -85,10 +85,11 @@ describe('#homeController', () => {
     const $ = load((await server.inject({ method: 'GET', url: '/' })).result)
 
     expect($('h1').text().trim()).toBe(
-      'Build a real government service with an AI team'
+      'Build a real government service, with AI as your team'
     )
     expect($('[data-testid="app-team"] li')).toHaveLength(7)
-    expect($('[data-testid="app-professions"] li')).toHaveLength(10)
+    expect($('h2').text()).toContain('Before you start')
+    expect($('body').text()).toContain("You don't need to know how to code")
     expect($('.app-stat__number').first().text()).toBe('10')
     expect($('.govuk-button--start').first().attr('href')).toBe('/profession')
     expect($('.govuk-button--start').first().text().trim()).toBe('Start now')

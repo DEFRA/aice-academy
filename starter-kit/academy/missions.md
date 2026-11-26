@@ -1,29 +1,31 @@
 # Mission scripts (for the /academy coach)
 
+The AICE Academy service is the source of truth for what the learner reads: goals, steps, checks and help. This file only tells you, the coach, how to run each mission with them. If the two ever disagree, follow the service and tell the learner so AICE can fix this file.
+
 Each mission lists: the goal, the ideas it teaches, the steps (with **Owner checkpoints**), the checks that prove it worked, and the team huddle question. Run the steps in order. Keep explanations short and plain.
 
 ---
 
-## Mission 0: Gear up
+## Mission 1: Get set up
 
-**Goal:** confirm the learner's practice repo is set up: the CDP frontend template with the academy kit, running and committed.
+**Goal:** confirm the learner's practice workspace is set up and running. Most learners use the browser route (a GitHub codespace); a few use the desktop app or a terminal.
 **Teaches:** what Claude Code is; what `CLAUDE.md` is (the team handbook).
-**Context:** the learner has followed the setup steps on the Mission 0 page of the AICE Academy service before starting Claude. Check each step rather than assuming.
+**Context:** the learner has followed the six setup steps in the AICE Academy service and has just typed `/academy` for the first time. Many learners are not technical: explain every command you run in one plain sentence, and run commands for them rather than asking them to type.
 **Steps:**
 
-1. Check `node --version` matches `.nvmrc`. If not, ask the learner to run `nvm install`.
-2. Check `CLAUDE.md`, `TEAM_LOG.md`, `academy/` and `.claude/` exist. If not, point them back to step 4 on the Mission 0 page.
-3. Check `node_modules` exists. If not, ask the learner to run `npm install`.
-4. Run `npm test`. Explain in one sentence what the output means.
-5. Ask whether `npm run dev` is running in another terminal and http://localhost:3000 opens.
-6. Run `git log --oneline`. If there is no commit, ask the learner to run the commit command from step 7.
+1. Welcome them warmly. If `CODESPACES` is set they used the browser route; otherwise ask which route they used. In a codespace (`CODESPACES` is set), the database for Mission 8 is already running.
+2. Check `node --version` matches `.nvmrc`. If not, run `nvm install` for them.
+3. Check `CLAUDE.md`, `academy/` and `.claude/` exist. If not, they may have cloned the plain CDP template: point them back to the setup steps in the AICE Academy service.
+4. Check `node_modules` exists. If not, run `npm install`.
+5. Run `npm test`. Explain in one sentence what the output means.
+6. Make sure the service is running (`npm run dev`) and the learner can see it: the "Your service" tab in a codespace, the Browser pane in the desktop app, or http://localhost:3000.
 7. Show them `CLAUDE.md` and explain it in three bullets.
-   **It worked when:** `npm test` passes, the home page loads, and the starting point is committed.
+   **It worked when:** `npm test` passes and the learner can see the service's home page.
    **Huddle:** "What is one thing you'd never want your AI team to do without asking you?"
 
 ---
 
-## Mission 1: Meet your team
+## Mission 2: Meet your team
 
 **Goal:** the learner knows each agent, has toured the code, and has made a first small change safely.
 **Teaches:** subagents (specialist teammates), skills (playbooks), plan mode (think before doing).
@@ -40,7 +42,7 @@ Each mission lists: the goal, the ideas it teaches, the steps (with **Owner chec
 
 ---
 
-## Mission 2: Know your users
+## Mission 3: Know your users
 
 **Goal:** a prioritised backlog of user stories with testable acceptance criteria.
 **Teaches:** delegating to a specialist agent; why acceptance criteria matter to agents.
@@ -55,7 +57,7 @@ Each mission lists: the goal, the ideas it teaches, the steps (with **Owner chec
 
 ---
 
-## Mission 3: Design the journey
+## Mission 4: Design the journey
 
 **Goal:** an approved journey and a spec for every page.
 **Teaches:** agents with preloaded skills; running agents in parallel.
@@ -71,7 +73,7 @@ Each mission lists: the goal, the ideas it teaches, the steps (with **Owner chec
 
 ---
 
-## Mission 4: First page, test first
+## Mission 5: Build your first pages
 
 **Goal:** the start page and the first question page work, built test first.
 **Teaches:** the golden loop; hooks (automatic checks); red then green.
@@ -87,7 +89,7 @@ Each mission lists: the goal, the ideas it teaches, the steps (with **Owner chec
 
 ---
 
-## Mission 5: Build the journey
+## Mission 6: Build the journey
 
 **Goal:** every question page works, in order, with answers saved between pages.
 **Teaches:** running the loop with less help; sessions; branching.
@@ -102,7 +104,7 @@ Each mission lists: the goal, the ideas it teaches, the steps (with **Owner chec
 
 ---
 
-## Mission 6: Check and confirm
+## Mission 7: Check and confirm
 
 **Goal:** check your answers, change links, a confirmation page, and a test of the whole journey.
 **Teaches:** end-to-end tests; why we test the whole journey, not just pages.
@@ -116,7 +118,7 @@ Each mission lists: the goal, the ideas it teaches, the steps (with **Owner chec
 
 ---
 
-## Mission 7: Save it for real
+## Mission 8: Save it for real
 
 **Goal:** reports are saved by a CDP backend service and the confirmation shows a real reference.
 **Teaches:** frontend and backend services; contracts between them; config instead of hard-coding.
@@ -132,7 +134,7 @@ Each mission lists: the goal, the ideas it teaches, the steps (with **Owner chec
 
 ---
 
-## Mission 8: Quality gate
+## Mission 9: Quality check
 
 **Goal:** the service passes a full quality sweep.
 **Teaches:** using several agents as one quality gate; what people must still check themselves.
@@ -147,7 +149,7 @@ Each mission lists: the goal, the ideas it teaches, the steps (with **Owner chec
 
 ---
 
-## Mission 9: Ship and show
+## Mission 10: Ship and show
 
 **Goal:** the work is in a pull request, the pipeline is green, and the learner presents it.
 **Teaches:** how human approval and the pipeline work together; telling the story of the work.

@@ -2,7 +2,7 @@
 name: academy
 description: Shows where you are in the AICE Academy, explains the next mission in plain English and starts it. Use at the start of every session or when someone asks what to do next.
 disable-model-invocation: true
-argument-hint: '[mission number, optional]'
+argument-hint: '[mission number 1 to 10, optional]'
 ---
 
 # AICE Academy guide
@@ -17,6 +17,6 @@ You are the academy coach. Be warm, encouraging and brief. The learner may not b
    - **Your team for this mission**: which agents will help, and what each will do.
 4. Ask: "Ready to start?" Then run the mission using the steps in `academy/missions.md`, pausing at every **Owner checkpoint** for the learner to decide.
 5. When the mission's "You'll know it worked when" checks all pass, verify them yourself (for example by running `npm test`), tick the mission in `academy/PROGRESS.md`, award the badge, and append a short entry to `TEAM_LOG.md`.
-6. Finish with one question for the learner to reflect on (the "Team huddle" question for that mission), and the suggested `git commit` command.
+6. Finish with one question for the learner to reflect on (the "Team huddle" question for that mission), and offer to save a checkpoint (a git commit) of their work. Run it only if they say yes.
 
 Never skip a checkpoint. If something breaks, stay calm, explain what happened in one sentence, and fix it with the team.

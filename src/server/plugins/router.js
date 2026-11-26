@@ -3,6 +3,8 @@ import inert from '@hapi/inert'
 import { home } from '../routes/home/index.js'
 import { profession } from '../routes/profession/index.js'
 import { missions } from '../routes/missions/index.js'
+import { setup } from '../routes/setup/index.js'
+import { claudePermissions } from '../routes/claude-permissions/index.js'
 import { howItWorks } from '../routes/how-it-works/index.js'
 import { glossary } from '../routes/glossary/index.js'
 import { health } from '../routes/health/index.js'
@@ -21,7 +23,15 @@ export const router = {
       await server.register([cookies])
 
       // Application specific routes, add your own routes here
-      await server.register([home, profession, missions, howItWorks, glossary])
+      await server.register([
+        home,
+        profession,
+        missions,
+        setup,
+        claudePermissions,
+        howItWorks,
+        glossary
+      ])
 
       // Static assets
       if (!config.get('isProduction') && !config.get('isTest')) {

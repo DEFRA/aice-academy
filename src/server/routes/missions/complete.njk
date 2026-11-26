@@ -19,7 +19,7 @@
         {{ govukButton({ text: "See all your badges", href: "/missions" }) }}
       {% elif nextMission %}
         <h2 class="govuk-heading-m">What's next</h2>
-        <p class="govuk-body">Mission {{ nextMission.number }}: {{ nextMission.title }}.</p>
+        <p class="govuk-body"><strong>Mission {{ nextMission.number }}: {{ nextMission.title }}.</strong> {{ nextMission.summary }}</p>
         {{ govukButton({ text: "Start the next mission", href: "/missions/" + nextMission.slug }) }}
       {% endif %}
 

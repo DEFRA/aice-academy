@@ -82,6 +82,27 @@ describe('Cookies route', () => {
     expect(response.payload).toContain('_ga')
   })
 
+  test('GET /cookies names both essential cookies and how long they last', async () => {
+    const response = await server.inject({ method: 'GET', url: '/cookies' })
+    const $ = cheerio.load(response.payload)
+    const rows = $('.govuk-table')
+      .first()
+      .find('tbody tr')
+      .map((_, row) =>
+        $(row)
+          .find('td')
+          .map((__, cell) => $(cell).text().trim())
+          .get()
+          .join(' | ')
+      )
+      .get()
+
+    expect(rows).toEqual([
+      `${config.get('cookieConsent.name')} | Saves your cookie consent settings | 1 year`,
+      `${config.get('session.cache.name')} | Remembers your profession, setup choice and academy progress | 30 days`
+    ])
+  })
+
   test('POST /cookies returns 200 if async', async () => {
     const getResponse = await server.inject({ method: 'GET', url: '/cookies' })
     const $ = cheerio.load(getResponse.payload)

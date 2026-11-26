@@ -1,0 +1,54 @@
+{% extends 'layouts/page.njk' %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="app-progress" data-testid="app-progress">
+        <span class="govuk-caption-m">{{ caption }}</span>
+        <div class="app-progress__bar" aria-hidden="true">
+          <div class="app-progress__fill app-progress__fill--{{ progressPercent }}"></div>
+        </div>
+      </div>
+
+      <h1 class="govuk-heading-l">{{ heading }}</h1>
+      <p class="govuk-body govuk-hint">{{ step.time }}</p>
+
+      <div data-testid="app-step-body">
+        {{ step.html | safe }}
+      </div>
+
+      {{ govukInsetText({
+        html: '<h2 class="govuk-heading-s">You\'ll know it worked when you see</h2><p class="govuk-body">' + (step.see | escape) + '</p>',
+        attributes: { "data-testid": "app-step-see" }
+      }) }}
+
+      {% set stuckHtml %}
+        <dl class="app-stuck">
+          {% for item in step.stuck %}
+            <dt class="govuk-heading-s app-stuck__problem">{{ item.problem }}</dt>
+            <dd class="app-stuck__fix">{{ item.fixHtml | safe }}</dd>
+          {% endfor %}
+        </dl>
+        <p class="govuk-body"><strong>Still stuck?</strong> Ask in your cohort channel, or tell your facilitator which step you're on. Everyone gets stuck sometimes.</p>
+      {% endset %}
+
+      {{ govukDetails({
+        summaryText: "This isn't what I see",
+        html: stuckHtml,
+        attributes: { "data-testid": "app-stuck" }
+      }) }}
+
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: nextText,
+          href: nextHref
+        }) }}
+        <a href="{{ previousHref }}" class="govuk-link">Back</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

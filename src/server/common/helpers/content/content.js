@@ -19,10 +19,20 @@ const missionSchema = Joi.object({
   build: Joi.string().required(),
   learn: Joi.string().required(),
   team: Joi.string().required(),
-  prompts: Joi.array().items(Joi.string()).min(1).required(),
   checks: Joi.array().items(Joi.string()).min(1).required(),
   huddle: Joi.string().required(),
-  lead: Joi.array().items(Joi.string()).required()
+  lead: Joi.array().items(Joi.string()).required(),
+  setup: Joi.boolean().default(false),
+  stuck: Joi.array()
+    .items(
+      Joi.object({
+        problem: Joi.string().required(),
+        fix: Joi.string().required()
+      })
+    )
+    .default([]),
+  stage: Joi.string().valid('Get set up', 'Plan', 'Build', 'Finish').required(),
+  summary: Joi.string().required()
 })
 
 const frontMatterPattern = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/
@@ -31,6 +41,7 @@ let missionsCache
 let professionsCache
 let glossaryCache
 let teamCache
+let setupStepsCache
 
 /**
  * Splits a markdown file into its YAML front matter and markdown body.
@@ -62,7 +73,11 @@ function loadMission(fileName) {
     throw new Error(`${fileName}: ${error.message}`)
   }
 
-  return { ...value, html: renderMarkdown(body) }
+  return {
+    ...value,
+    html: renderMarkdown(body),
+    stuck: renderStuck(value.stuck)
+  }
 }
 
 /**
@@ -102,6 +117,91 @@ export function getTeam() {
   teamCache ??= parse(readContentFile('team.yml'))
 
   return teamCache
+}
+
+const stuckSchema = Joi.array()
+  .items(
+    Joi.object({
+      problem: Joi.string().required(),
+      fix: Joi.string().required()
+    })
+  )
+  .default([])
+
+const setupStepSchema = Joi.object({
+  number: Joi.number().integer().min(1).required(),
+  slug: Joi.string()
+    .pattern(/^[a-z0-9-]+$/)
+    .required(),
+  title: Joi.string().required(),
+  time: Joi.string().required(),
+  see: Joi.string().required(),
+  stuck: stuckSchema
+})
+
+function loadSetupStep(fileName) {
+  const { data, body } = parseFrontMatter(
+    readContentFile('setup', 'steps', fileName),
+    fileName
+  )
+  const { error, value } = setupStepSchema.validate(data)
+
+  if (error) {
+    throw new Error(`${fileName}: ${error.message}`)
+  }
+
+  return {
+    ...value,
+    html: renderMarkdown(body),
+    stuck: renderStuck(value.stuck)
+  }
+}
+
+/**
+ * Help items rendered to safe HTML, so fixes can contain links.
+ */
+function renderStuck(stuck) {
+  return stuck.map(({ problem, fix }) => ({
+    problem,
+    fixHtml: renderMarkdown(fix)
+  }))
+}
+
+/**
+ * The step-by-step setup journey for Mission 0, in order.
+ */
+export function getSetupSteps() {
+  setupStepsCache ??= readdirSync(path.join(contentDir, 'setup', 'steps'))
+    .filter((fileName) => fileName.endsWith('.md'))
+    .map(loadSetupStep)
+    .sort((a, b) => a.number - b.number)
+
+  return setupStepsCache
+}
+
+export function getSetupStep(slug) {
+  return getSetupSteps().find((step) => step.slug === slug)
+}
+
+const otherSetupPages = { 'desktop-app': 'desktop', terminal: 'terminal' }
+
+/**
+ * Setup guides for people who use technical tools.
+ * @param {string} id - 'desktop-app' or 'terminal'
+ */
+export function getOtherSetupPage(id) {
+  const fileName = otherSetupPages[id]
+
+  if (!fileName) {
+    return undefined
+  }
+
+  const { data, body } = parseFrontMatter(
+    readContentFile('setup', 'other', `${fileName}.md`),
+    `${fileName}.md`
+  )
+
+  return { id, title: data.title, html: renderMarkdown(body) }
 }
 
 export function getGlossary() {

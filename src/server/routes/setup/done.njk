@@ -1,0 +1,28 @@
+{% extends 'layouts/page.njk' %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukPanel({
+        titleText: "You're set up",
+        text: "Your workspace is ready and your team is waiting"
+      }) }}
+
+      <p class="govuk-body">That was the trickiest part of the whole academy, and you've done it.</p>
+
+      <h2 class="govuk-heading-m">What's next</h2>
+      <p class="govuk-body">Tick off Mission 1 to earn your first badge. Then, in Mission 2, you'll meet your AI team and make your first change.</p>
+
+      {{ govukButton({
+        text: "Tick off Mission 1",
+        href: "/missions/gear-up#checks"
+      }) }}
+
+      <h2 class="govuk-heading-m">Coming back later</h2>
+      <p class="govuk-body">Your workspace pauses after 30 minutes without activity, and nothing is lost. To open it again, go to <a href="https://github.com/codespaces" class="govuk-link" target="_blank" rel="noreferrer noopener">your codespaces on GitHub (opens in new tab)</a> and select its name. Then start Claude again by typing <code class="app-code">claude</code> in a terminal.</p>
+    </div>
+  </div>
+{% endblock %}

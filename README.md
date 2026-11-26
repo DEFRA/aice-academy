@@ -1,12 +1,4 @@
-<<<<<<< your version
-
 # aice-academy
-
-=======
-
-# AICE Academy
-
-> > > > > > > academy
 
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_aice-academy&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=DEFRA_aice-academy)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_aice-academy&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DEFRA_aice-academy)

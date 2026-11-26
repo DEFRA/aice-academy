@@ -46,8 +46,8 @@ export const homeController = {
     const completedCount = countCompleted(progress)
 
     return h.view('home/index', {
-      pageTitle: 'Build a real government service with an AI team',
-      heading: 'Build a real government service with an AI team',
+      pageTitle: 'Build a real government service, with AI as your team',
+      heading: 'Build a real government service, with AI as your team',
       missionCount: missions.length,
       completedCount,
       isReturning: Boolean(progress.profession) || completedCount > 0,

@@ -6,7 +6,8 @@ import convictFormatWithValidator from 'convict-format-with-validator'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const fourHoursMs = 14400000
+// Learners come back over days or weeks, so keep academy progress for 30 days
+const thirtyDaysMs = 1000 * 60 * 60 * 24 * 30
 const oneWeekMs = 604800000
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -130,7 +131,7 @@ export const config = convict({
       ttl: {
         doc: 'server side session cache ttl',
         format: Number,
-        default: fourHoursMs,
+        default: thirtyDaysMs,
         env: 'SESSION_CACHE_TTL'
       }
     },
@@ -138,7 +139,7 @@ export const config = convict({
       ttl: {
         doc: 'Session cookie ttl',
         format: Number,
-        default: fourHoursMs,
+        default: thirtyDaysMs,
         env: 'SESSION_COOKIE_TTL'
       },
       password: {

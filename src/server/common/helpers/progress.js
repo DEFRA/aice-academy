@@ -22,6 +22,19 @@ export function setProfession(request, professionId) {
   saveProgress(request, { ...getProgress(request), profession: professionId })
 }
 
+/**
+ * Remembers the furthest setup step the learner has reached.
+ */
+export function recordSetupStep(request, stepNumber) {
+  const progress = getProgress(request)
+
+  if ((progress.setupStep ?? 0) >= stepNumber) {
+    return
+  }
+
+  saveProgress(request, { ...progress, setupStep: stepNumber })
+}
+
 export function getMissionStatus(progress, slug) {
   return progress.missions[slug]?.status ?? missionStatus.notStarted
 }

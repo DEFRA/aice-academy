@@ -7,6 +7,7 @@ import {
   SkipLink
 } from 'govuk-frontend'
 import cookies from './cookies.js'
+import { initCopyButtons } from './copy-buttons.js'
 
 cookies.init()
 
@@ -15,3 +16,5 @@ createAll(Checkboxes)
 createAll(ErrorSummary)
 createAll(Radios)
 createAll(SkipLink)
+
+initCopyButtons()

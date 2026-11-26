@@ -1,15 +1,15 @@
 # The AI team, shown on the home page.
-- name: product-coach
-  job: Turns ideas and research into user stories, with tests in mind from the start.
-- name: interaction-designer
-  job: Maps the journey and designs each page with GOV.UK patterns.
-- name: content-designer
-  job: Makes every word clear, short and in GOV.UK style.
-- name: developer
-  job: Builds on Defra's CDP template to make the tests pass.
-- name: tester
-  job: Writes the tests before the code exists, then proves it works.
-- name: accessibility-auditor
-  job: Checks every page works for everyone.
-- name: reviewer
-  job: The critical friend. Checks quality, security and standards, and never edits.
+- name: Product coach
+  job: Turns research into a to-do list, with a clear idea of when each thing is done.
+- name: Interaction designer
+  job: Plans every page using GOV.UK's tried-and-tested patterns.
+- name: Content designer
+  job: Makes every word clear, short and friendly.
+- name: Developer
+  job: Builds your pages until every test passes.
+- name: Tester
+  job: Writes checks before anything's built, then proves it works.
+- name: Accessibility checker
+  job: Makes sure every page works for everyone.
+- name: Reviewer
+  job: The critical friend. Checks quality and safety, and never changes anything.

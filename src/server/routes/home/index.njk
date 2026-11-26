@@ -14,7 +14,7 @@
         {% if isReturning %}
           <p class="govuk-body-l app-masthead__lede" data-testid="app-welcome-back">Welcome back. You've completed {{ completedCount }} of {{ missionCount }} missions.</p>
         {% else %}
-          <p class="govuk-body-l app-masthead__lede">Ten missions. Seven AI teammates. One working GOV.UK service on Defra's Core Delivery Platform, built by you. No coding experience needed.</p>
+          <p class="govuk-body-l app-masthead__lede">You'll build a real government web form, with a team of AI helpers doing the technical work. You don't need to know how to code.</p>
         {% endif %}
 
         {{ govukButton({
@@ -24,30 +24,50 @@
           classes: "govuk-button--inverse"
         }) }}
 
-        <p class="govuk-body-s app-masthead__meta">About 18 to 20 hours, at your own pace or with a cohort. Open to every Defra profession.</p>
+        <p class="govuk-body-s app-masthead__meta">Free for Defra staff. Works in your web browser, with nothing to install.</p>
       </div>
     </div>
   </div>
 
   <div class="govuk-grid-row" data-testid="app-stats">
     <div class="govuk-grid-column-one-third">
-      <p class="govuk-body app-stat"><span class="app-stat__number">{{ missionCount }}</span> missions, from setup to show and tell</p>
+      <p class="govuk-body app-stat"><span class="app-stat__number">{{ missionCount }}</span> short missions, each with step-by-step help</p>
     </div>
     <div class="govuk-grid-column-one-third">
-      <p class="govuk-body app-stat"><span class="app-stat__number">{{ team.length }}</span> AI teammates who plan, build, test and check</p>
+      <p class="govuk-body app-stat"><span class="app-stat__number">{{ team.length }}</span> AI teammates who do the technical work</p>
     </div>
     <div class="govuk-grid-column-one-third">
-      <p class="govuk-body app-stat"><span class="app-stat__number">1</span> working service with tests, in a pull request</p>
+      <p class="govuk-body app-stat"><span class="app-stat__number">1</span> working government service, built by you</p>
     </div>
   </div>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h2 class="govuk-heading-l">You're the service owner. Claude is your team.</h2>
-      <p class="govuk-body">You decide what to build and whether it's good enough. Claude leads a team of specialist AI agents who write the stories, design the pages, write the code, test it and check it. Nothing goes in without your say-so.</p>
-      <p class="govuk-body">It's how Defra teams will work with AI: people setting direction and making the calls, agents doing the heavy lifting, and tests proving every step.</p>
+      <h2 class="govuk-heading-l">Is this for me?</h2>
+      <p class="govuk-body">Yes, if you work at Defra and you're curious about how AI will change the way we build services. People from every kind of job take part: policy, finance, design, data, operations and more.</p>
+      <p class="govuk-body"><strong>You don't need to know how to code.</strong> You'll tell your AI team what you want in plain English. They do the technical work, and you make the decisions.</p>
+
+      <h2 class="govuk-heading-l">Before you start</h2>
+      <p class="govuk-body">You'll need:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a laptop or desktop computer with a web browser, such as Chrome, Edge or Safari</li>
+        <li>a free GitHub account: we'll show you how to get one</li>
+        <li>access to Claude, which your facilitator will arrange</li>
+        <li>about 25 minutes for setting up</li>
+      </ul>
+      <p class="govuk-body">After that, each mission takes between 1 and 3 hours. Most people do one or two a week.</p>
+
+      <h2 class="govuk-heading-l">What you'll make</h2>
+      <p class="govuk-body"><strong>Report a hedgehog sighting</strong>: a practice service for a made-up nature team that wants to know where people see hedgehogs. It works just like a real GOV.UK form:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a start page, then one question per page</li>
+        <li>helpful messages when someone makes a mistake</li>
+        <li>advice if the hedgehog looks injured</li>
+        <li>a page to check your answers, and a confirmation with a reference number</li>
+      </ul>
 
       <h2 class="govuk-heading-l">Meet your AI team</h2>
+      <p class="govuk-body">Each teammate is Claude, given one job to focus on. You're the boss.</p>
     </div>
   </div>
 
@@ -62,40 +82,22 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-body">They check each other's work. The tester never writes the code, and the reviewer never edits it.</p>
+      <p class="govuk-body">They check each other's work: the tester never builds, and the reviewer never changes anything.</p>
 
-      <h2 class="govuk-heading-l">How every feature gets built</h2>
+      <h2 class="govuk-heading-l">How it works</h2>
       <ol class="govuk-list govuk-list--number">
-        <li><strong>Story.</strong> Agree what to build and how you'll know it works.</li>
-        <li><strong>Test first.</strong> Write tests that fail, because the feature doesn't exist yet.</li>
-        <li><strong>Build.</strong> Make the smallest change that passes.</li>
-        <li><strong>Check.</strong> Accessibility, content and code review, all at once.</li>
-        <li><strong>You approve.</strong> Try it yourself, then commit.</li>
+        <li><strong>You say what you want,</strong> in your own words.</li>
+        <li><strong>Your team plans it</strong> and checks the plan with you.</li>
+        <li><strong>They build it,</strong> testing as they go.</li>
+        <li><strong>You try it</strong> and decide if it's good enough.</li>
       </ol>
-      <p class="govuk-body">Tests run automatically every time anything changes, so problems get caught in seconds. <a href="/how-it-works" class="govuk-link">Find out how it works</a>.</p>
-
-      <h2 class="govuk-heading-l">What you'll build</h2>
-      <p class="govuk-body"><strong>Report a hedgehog sighting</strong>: a practice service for a fictional nature recovery team planning "hedgehog highways" between gardens. Small enough to finish, real enough to matter. You'll build:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li>question pages with clear error messages</li>
-        <li>a branch that gives advice when a hedgehog is injured</li>
-        <li>a check your answers page and a confirmation with a reference number</li>
-        <li>a backend service that saves every report</li>
-      </ul>
+      <p class="govuk-body"><a href="/how-it-works" class="govuk-link">Find out more about how it works</a></p>
 
       <h2 class="govuk-heading-l">What you'll take away</h2>
       <ul class="govuk-list govuk-list--bullet">
-        <li>a working service, tested and accessible, in a pull request with a green pipeline</li>
-        <li>a way of working with AI you can use with your team on Monday</li>
+        <li>a working service you built, to show your team</li>
+        <li>confidence working with AI, and a way of doing it you can use straight away</li>
         <li>a badge for every mission, and graduation as an AI-native builder</li>
-      </ul>
-
-      <h2 class="govuk-heading-l">Made for every profession</h2>
-      <p class="govuk-body">Everyone does the same missions. Your profession decides which ones you lead and gives you stretch challenges that match your job.</p>
-      <ul class="app-tag-list" data-testid="app-professions">
-        {% for profession in professions %}
-          <li>{{ govukTag({ text: profession.name, classes: "govuk-tag--grey" }) }}</li>
-        {% endfor %}
       </ul>
     </div>
   </div>
@@ -105,7 +107,7 @@
     {% if isReturning %}
       <p class="govuk-body">You've completed {{ completedCount }} of {{ missionCount }} missions. Your next one is ready when you are.</p>
     {% else %}
-      <p class="govuk-body">Mission 0 takes about an hour and gets everything set up on your laptop.</p>
+      <p class="govuk-body">First, tell us a little about your work. Then we'll take you through setting up, one step at a time.</p>
     {% endif %}
     {{ govukButton({
       text: callToAction.text,

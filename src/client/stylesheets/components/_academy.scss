@@ -1,3 +1,4 @@
+@use "sass:math";
 @use "govuk-frontend" as *;
 
 // Home page masthead
@@ -83,6 +84,123 @@
 
 .app-code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+// Copy buttons added by copy-buttons.js
+.app-copy {
+  margin-bottom: govuk-spacing(4);
+}
+
+.app-copy .app-code-block {
+  margin-bottom: govuk-spacing(2);
+}
+
+.app-copy__button {
+  margin-bottom: 0;
+}
+
+// Setup steps on Mission 0
+.app-setup {
+  margin: govuk-spacing(6) 0;
+  padding-top: govuk-spacing(4);
+  border-top: 5px solid govuk-functional-colour(brand);
+}
+
+// I'm stuck panel on every mission
+.app-stuck {
+  margin: 0 0 govuk-spacing(4);
+}
+
+.app-stuck__problem {
+  margin-bottom: govuk-spacing(1);
+}
+
+.app-stuck__fix {
+  margin: 0 0 govuk-spacing(4);
+}
+
+.app-stuck__fix .govuk-body {
+  margin-bottom: 0;
+}
+
+// Step list on the setup overview
+.app-step-list {
+  margin: govuk-spacing(6) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.app-step-list__item {
+  display: flex;
+  align-items: center;
+  gap: govuk-spacing(3);
+  padding: govuk-spacing(3) 0;
+  border-bottom: 1px solid govuk-functional-colour(border);
+}
+
+.app-step-list__number {
+  @include govuk-font($size: 19, $weight: bold);
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: govuk-functional-colour(inverse-text);
+  background-color: govuk-functional-colour(brand);
+}
+
+.app-step-list__text {
+  @include govuk-font($size: 19);
+  flex-grow: 1;
+}
+
+.app-step-list__time {
+  display: block;
+  margin-bottom: 0;
+}
+
+.app-step-list__tag {
+  flex-shrink: 0;
+}
+
+// Progress bar on each setup step
+.app-progress {
+  margin-bottom: govuk-spacing(4);
+}
+
+.app-progress__bar {
+  height: 8px;
+  margin-top: govuk-spacing(2);
+  background-color: govuk-functional-colour(surface-background);
+}
+
+.app-progress__fill {
+  height: 100%;
+  background-color: govuk-functional-colour(brand);
+}
+
+@for $percent from 0 through 100 {
+  .app-progress__fill--#{$percent} {
+    width: math.percentage(math.div($percent, 100));
+  }
+}
+
+// "Start here" box on the missions page
+.app-next {
+  margin-bottom: govuk-spacing(6);
+  padding: govuk-spacing(4);
+  border-left: 5px solid govuk-functional-colour(brand);
+  background-color: govuk-functional-colour(surface-background);
+}
+
+.app-stage-heading {
+  margin-top: govuk-spacing(7);
+}
+
+.app-mission-meta__tag {
+  margin-left: govuk-spacing(2);
 }
 
 // Badges earned on the missions page

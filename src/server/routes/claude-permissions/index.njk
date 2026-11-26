@@ -1,0 +1,16 @@
+{% extends 'layouts/page.njk' %}
+
+{% block content %}
+  {{ appHeading({
+    text: heading,
+    caption: "AICE Academy"
+  }) }}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div data-testid="app-page-body">
+        {{ contentHtml | safe }}
+      </div>
+    </div>
+  </div>
+{% endblock %}

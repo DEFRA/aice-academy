@@ -1,27 +1,19 @@
 # AICE Academy starter kit
 
-Everything Claude Code needs to work as a delivery team on a CDP service: a team handbook, seven specialist agents, eight skills and three automatic checks. Mission 0 in the AICE Academy service walks you through setting it up.
+Everything Claude Code needs to work as a delivery team on a CDP service: a team handbook, seven specialist agents, eight skills and three automatic checks. Mission 1 in the AICE Academy service walks you through setting it up, one step at a time.
 
 ## Set up
 
-From the folder where you keep your code:
+You don't normally copy this kit by hand. It comes ready-made in the practice repo, [DEFRA/aice-academy-practice](https://github.com/DEFRA/aice-academy-practice), which is built from this folder by `scripts/build-practice-repo.sh` in the AICE Academy repo.
 
-```bash
-git clone --depth 1 https://github.com/DEFRA/cdp-node-frontend-template.git hedgehog-sightings
-git clone --depth 1 https://github.com/DEFRA/aice-academy.git
-cd hedgehog-sightings
-rm -rf .git
-git init
-cp -R ../aice-academy/starter-kit/. .
-nvm install
-npm install
-npm test
-git add -A
-git commit -m "Start from the CDP frontend template with the academy starter kit"
-claude
-```
+Mission 1 in the AICE Academy service sets learners up in the browser, with nothing to install: they open the practice repo in GitHub Codespaces, start the service and type `/academy`.
 
-Then type `/academy` in Claude Code.
+People who already use technical tools can also:
+
+- **use the Claude desktop app:** ask Claude to clone the practice repo and set it up
+- **use a terminal:** `git clone https://github.com/DEFRA/aice-academy-practice.git hedgehog-sightings`, then `nvm install`, `npm install`, `npm test` and `claude`
+
+To add the kit to some other CDP frontend repo, copy everything in this folder into the repo's root with `cp -R starter-kit/. /path/to/repo/`.
 
 ## What's inside
 
