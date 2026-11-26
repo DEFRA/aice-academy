@@ -12,7 +12,7 @@ Every feature goes round this loop. Nothing is "done" until a test proves it.
 2. **Test first (red)**: the tester agent writes tests from the acceptance criteria. They must fail first.
 3. **Build (green)**: the developer agent writes the smallest change that makes the tests pass.
 4. **Check**: the accessibility-auditor, content-designer and reviewer agents check the change.
-5. **Owner approves**: show the service owner what changed in the browser, then suggest a commit.
+5. **Owner approves**: show the service owner what changed in the browser, then offer to save a checkpoint.
 
 Hooks run the tests automatically after every code edit and when you finish a turn. If a hook reports a failure, fix it before you do anything else.
 
@@ -26,7 +26,7 @@ Hooks run the tests automatically after every code edit and when you finish a tu
 - **Accessible by default.** Every page must meet WCAG 2.2 AA.
 - **Never touch secrets.** Do not read or write `.env` files, keys or passwords. Secrets live in the CDP Portal.
 - **No real personal data.** Test data is always fictional.
-- **Git stays with the human.** Never push. After a green loop, suggest a `git add` and `git commit` command with a clear message for the service owner to run.
+- **Save checkpoints, never push.** After a green loop, offer to save a checkpoint (a git commit) with a clear message. Run it only when the service owner says yes. Never push.
 - **Keep the log.** After each loop, append a short entry to `TEAM_LOG.md`: what we built, which agents helped, what the tests check, and any decision the owner made.
 
 ## Commands

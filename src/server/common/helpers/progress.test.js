@@ -6,6 +6,7 @@ import {
   getProgress,
   missionStatus,
   setProfession,
+  recordSetupStep,
   startMission
 } from './progress.js'
 
@@ -100,5 +101,15 @@ describe('#progress', () => {
     expect(
       findNextMission([{ slug: 'gear-up' }], getProgress(request))
     ).toBeUndefined()
+  })
+
+  test('Should remember the furthest setup step reached', () => {
+    setProfession(request, 'data')
+    recordSetupStep(request, 3)
+    recordSetupStep(request, 2)
+
+    expect(getProgress(request)).toEqual(
+      expect.objectContaining({ profession: 'data', setupStep: 3 })
+    )
   })
 })

@@ -8,8 +8,13 @@ describe('#professionViewModel', () => {
   test('Should list every profession and tick the selected one', () => {
     const { profession } = professionViewModel('testing')
     const checked = profession.items.filter((item) => item.checked)
+    const options = profession.items.filter((item) => item.value)
 
-    expect(profession.items).toHaveLength(10)
+    expect(options).toHaveLength(12)
+    expect(options.map((item) => item.text)).toEqual(
+      expect.arrayContaining(['Something else', "I'm not sure"])
+    )
+    expect(profession.items.at(-2)).toEqual({ divider: 'or' })
     expect(checked).toEqual([
       expect.objectContaining({ value: 'testing', text: 'Testing' })
     ])
@@ -17,14 +22,12 @@ describe('#professionViewModel', () => {
 
   test('Should add Error to the page title when there are errors', () => {
     const model = professionViewModel(undefined, {
-      errorList: [{ text: 'Select your profession', href: '#profession' }],
-      fieldErrors: { profession: { text: 'Select your profession' } }
+      errorList: [{ text: 'Select one', href: '#profession' }],
+      fieldErrors: { profession: { text: 'Select one' } }
     })
 
-    expect(model.pageTitle).toBe("Error: What's your profession?")
-    expect(model.profession.errorMessage).toEqual({
-      text: 'Select your profession'
-    })
+    expect(model.pageTitle).toBe('Error: What kind of work do you do?')
+    expect(model.profession.errorMessage).toEqual({ text: 'Select one' })
   })
 })
 
@@ -48,8 +51,8 @@ describe('#professionController', () => {
     const $ = load(result)
 
     expect(statusCode).toBe(statusCodes.ok)
-    expect($('h1').text().trim()).toBe("What's your profession?")
-    expect($('input[name="profession"]')).toHaveLength(10)
+    expect($('h1').text().trim()).toBe('What kind of work do you do?')
+    expect($('input[name="profession"]')).toHaveLength(12)
   })
 
   test('Should save the profession and go to the missions', async () => {
@@ -70,10 +73,14 @@ describe('#professionController', () => {
     const $ = load(response.payload)
 
     expect(response.statusCode).toBe(statusCodes.badRequest)
-    expect($('title').text()).toContain("Error: What's your profession?")
+    expect($('title').text()).toContain('Error: What kind of work do you do?')
     expect($('.govuk-error-summary a').attr('href')).toBe('#profession')
-    expect($('.govuk-error-summary').text()).toContain('Select your profession')
-    expect($('#profession-error').text()).toContain('Select your profession')
+    expect($('.govuk-error-summary').text()).toContain(
+      "Select the kind of work you do, or I'm not sure"
+    )
+    expect($('#profession-error').text()).toContain(
+      "Select the kind of work you do, or I'm not sure"
+    )
   })
 
   test('Should reject a profession that does not exist', async () => {
@@ -82,6 +89,6 @@ describe('#professionController', () => {
     })
 
     expect(response.statusCode).toBe(statusCodes.badRequest)
-    expect(response.payload).toContain('Select your profession')
+    expect(response.payload).toContain('Select the kind of work you do')
   })
 })

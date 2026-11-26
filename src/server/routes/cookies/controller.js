@@ -16,6 +16,8 @@ export const cookiePolicyController = {
   handler: function (request, h) {
     return h.view('cookies/policy', {
       pageTitle: 'Cookies',
+      cookieName: config.get('cookieConsent.name'),
+      sessionCookieName: config.get('session.cache.name'),
       ...cookiesModel(
         request.query.updated,
         request.state[config.get('cookieConsent.name')]

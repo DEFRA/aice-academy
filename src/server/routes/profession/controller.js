@@ -8,33 +8,39 @@ import {
 import { buildFormErrors } from '#/server/common/helpers/form-errors.js'
 import { getProgress, setProfession } from '#/server/common/helpers/progress.js'
 
-const professionError = 'Select your profession'
+const professionError = "Select the kind of work you do, or I'm not sure"
 
 export function professionViewModel(selected, errors = {}) {
   const hasErrors = Boolean(errors.errorList?.length)
 
   return {
-    pageTitle: `${hasErrors ? 'Error: ' : ''}What's your profession?`,
+    pageTitle: `${hasErrors ? 'Error: ' : ''}What kind of work do you do?`,
     errorList: errors.errorList,
     profession: {
       idPrefix: 'profession',
       name: 'profession',
       fieldset: {
         legend: {
-          text: "What's your profession?",
+          text: 'What kind of work do you do?',
           isPageHeading: true,
           classes: 'govuk-fieldset__legend--l'
         }
       },
       hint: {
-        text: 'Everyone does the same missions. Your profession decides where you lead and your stretch challenges. You can change it later.'
+        text: "Everyone does the same missions, and you don't need any technical knowledge. Your answer tailors a few tips for you. You can change it later."
       },
       errorMessage: errors.fieldErrors?.profession,
-      items: getProfessions().map(({ id, name }) => ({
-        value: id,
-        text: name,
-        checked: id === selected
-      }))
+      items: getProfessions().flatMap(({ id, name, hint }) => {
+        const item = {
+          value: id,
+          text: name,
+          hint: { text: hint },
+          checked: id === selected
+        }
+
+        // Separate "I'm not sure" from the list, as GOV.UK radios do
+        return id === 'not-sure' ? [{ divider: 'or' }, item] : [item]
+      })
     }
   }
 }

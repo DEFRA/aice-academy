@@ -1,27 +1,19 @@
-import escape from 'lodash/escape.js'
-
 import { getGlossary } from '#/server/common/helpers/content/content.js'
 
 /**
- * Summary list rows for the glossary. Content is escaped before it is
- * placed in the html option.
+ * Glossary terms in alphabetical order, each with an id other pages link to.
  */
-export function buildGlossaryRows(glossary) {
-  return glossary.map(({ term, meaning, comparison }) => ({
-    key: { text: term },
-    value: {
-      html: `<p class="govuk-body">${escape(meaning)}</p><p class="govuk-body govuk-hint">Think of it as: ${escape(comparison)}</p>`
-    }
-  }))
+export function buildGlossaryTerms(glossary) {
+  return [...glossary].sort((a, b) => a.term.localeCompare(b.term, 'en-GB'))
 }
 
 export const glossaryController = {
   handler(_request, h) {
     return h.view('glossary/index', {
       pageTitle: 'Glossary',
-      heading: 'Glossary',
+      heading: 'Words you might meet',
       breadcrumbs: [{ text: 'Home', href: '/' }, { text: 'Glossary' }],
-      rows: buildGlossaryRows(getGlossary())
+      terms: buildGlossaryTerms(getGlossary())
     })
   }
 }

@@ -23,24 +23,26 @@ Separate agents with separate jobs catch each other's mistakes. The tester never
 Every feature goes round the same loop. Nothing is done until a test proves it.
 
 1. **Story.** What are we building, for whom, and how will we know it works?
-2. **Test first.** The tester writes tests that must fail, because the feature doesn't exist yet.
+2. **Test first.** The tester writes [tests](/glossary#test) that must fail, because the feature doesn't exist yet.
 3. **Build.** The developer writes the smallest change that makes the tests pass.
 4. **Check.** Accessibility, content and code review happen at the same time.
 5. **You approve.** Try it in the browser, including making a mistake on purpose.
 
 ## What happens automatically
 
-- When Claude edits code, the related tests run. If they fail, Claude fixes them straight away.
-- When Claude says it has finished, the whole test suite runs first.
-- Anything that tries to read or change a secrets file is blocked.
+Your team has [automatic checks](/glossary#hook) that run without anyone remembering:
+
+- Every time Claude changes something, the related tests run. If one fails, Claude fixes it straight away.
+- Before Claude says it's finished, every test runs.
+- Passwords and other secrets are off limits. Claude can't open them.
 
 ## Team rules
 
-1. Use approved tools and access. Follow the [Defra AI toolkit](https://digital.defra.gov.uk/ai-toolkit) guidance.
-2. Use made-up data only.
-3. Keep secrets out of code and prompts.
-4. Agents propose, you decide.
-5. Never weaken a test to make it pass.
-6. Git stays with you. Claude never pushes.
-7. Use GOV.UK components and patterns. Never invent new ones.
-8. Keep the team log.
+1. Use the tools and accounts your facilitator gives you. Follow the [Defra AI toolkit (opens in new tab)](https://digital.defra.gov.uk/ai-toolkit) guidance.
+2. Use made-up information only. Never real people's details.
+3. Never put passwords or secrets in your work or your messages to Claude.
+4. Your teammates suggest. You decide.
+5. A failing test is never "fixed" by making the test easier.
+6. Claude never shares your work outside your workspace without you asking.
+7. Use GOV.UK's building blocks. Never invent new ones.
+8. Read [when Claude asks permission](/claude-permissions) before your first mission.

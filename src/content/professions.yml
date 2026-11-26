@@ -1,31 +1,49 @@
 # Profession tracks. Each mission's `lead` list uses these ids.
 - id: product-delivery
   name: Product and delivery
+  hint: Product managers, delivery managers and service owners.
   stretch: Write a "Later" roadmap and success measures for version 2.
 - id: business-analysis
   name: Business analysis
+  hint: Working out what a service needs to do, and why.
   stretch: Add acceptance criteria for every edge case you can find.
 - id: interaction-design
   name: Interaction design
+  hint: Designing how pages and journeys work.
   stretch: Try the AICE interaction designer plugin.
 - id: content-design
   name: Content design
-  stretch: Make the content-designer agent stricter and test it.
+  hint: Writing the words people read in a service.
+  stretch: Make the content designer teammate stricter and test it.
 - id: user-research
   name: User research
+  hint: Finding out what people need, by talking to them and watching them use services.
   stretch: Test your service with two colleagues and feed the findings back.
 - id: software-development
   name: Software development
-  stretch: Add Playwright and axe tests to the pipeline.
+  hint: Writing and maintaining code.
+  stretch: Add browser tests and automated accessibility tests to the pipeline.
 - id: testing
   name: Testing
+  hint: Checking services work properly before people use them.
   stretch: Add tests for every error message and branch.
 - id: architecture
   name: Architecture
-  stretch: Sketch how this service would expose an agent-ready (MCP) interface.
+  hint: Designing how systems fit together.
+  stretch: Sketch how this service could be used by other AI agents, not just people.
 - id: data
   name: Data
+  hint: Collecting, managing and analysing information.
   stretch: Design what the team would need to report on from the saved data.
 - id: policy-operations
   name: Policy and operations
+  hint: Writing policy, or running services and casework.
   stretch: Write the advice for injured hedgehogs and check it with an expert.
+- id: something-else
+  name: Something else
+  hint: For example finance, HR, communications, science or project management.
+  stretch: Spot one thing your own team does by hand that this way of working could help with, and bring it to your show and tell.
+- id: not-sure
+  name: I'm not sure
+  hint: That's fine. You'll do everything everyone else does.
+  stretch: Spot one thing your own team does by hand that this way of working could help with, and bring it to your show and tell.

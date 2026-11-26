@@ -36,8 +36,8 @@ describe('#buildTaskListItems', () => {
     const led = items.filter((item) => item.hint.text.includes('You lead'))
 
     expect(led.map((item) => item.title.text)).toEqual([
-      'Mission 4: First page, test first',
-      'Mission 6: Check and confirm'
+      'Mission 5: Build your first pages',
+      'Mission 7: Check and confirm'
     ])
   })
 })
@@ -101,28 +101,102 @@ describe('#missionsController', () => {
     )
   })
 
-  test('Should ask a learner with no profession to choose one', async () => {
+  test('Should point a new learner to Mission 1', async () => {
     const $ = load(
       (await server.inject({ method: 'GET', url: '/missions' })).result
     )
 
-    expect($('.govuk-inset-text a').attr('href')).toBe('/profession')
+    expect($('[data-testid="app-next"]').text()).toContain('Start here')
+    expect($('[data-testid="app-next"] a.govuk-button').attr('href')).toBe(
+      '/missions/gear-up'
+    )
   })
 
-  test('Should show a mission with its prompts and checks', async () => {
+  test('Should group missions into four stages', async () => {
+    const $ = load(
+      (await server.inject({ method: 'GET', url: '/missions' })).result
+    )
+
+    expect(
+      $('.app-stage-heading')
+        .map((_, heading) => $(heading).text().trim())
+        .get()
+    ).toEqual([
+      'Stage 1: Get set up',
+      'Stage 2: Plan',
+      'Stage 3: Build',
+      'Stage 4: Finish'
+    ])
+  })
+
+  test('Should show what you will do, then steps, then checks', async () => {
     const response = await server.inject({
       method: 'GET',
       url: '/missions/first-page-test-first'
     })
     const $ = load(response.result)
+    const body = $('[data-testid="app-mission-body"]')
 
     expect(response.statusCode).toBe(statusCodes.ok)
-    expect($('h1').text().trim()).toBe('First page, test first')
-    expect($('[data-testid="app-prompt"]').first().text()).toBe(
+    expect($('h1').text().trim()).toBe('Build your first pages')
+    expect($('.govuk-caption-l').text()).toBe('Mission 5 of 10: Build')
+    expect(body.find('h2').first().text()).toBe("What you'll do")
+    expect(body.find('pre').first().text().trim()).toBe(
       '/golden-loop Start page'
     )
-    expect($('input[name="checks"]')).toHaveLength(4)
-    expect($('.govuk-breadcrumbs').text()).toContain('Missions')
+    expect($('input[name="checks"]')).toHaveLength(5)
+    expect($('legend').text()).toContain('Check it worked')
+  })
+
+  test('Should link to the previous and next missions', async () => {
+    const $ = load(
+      (
+        await server.inject({
+          method: 'GET',
+          url: '/missions/first-page-test-first'
+        })
+      ).result
+    )
+
+    expect($('.govuk-pagination__prev a').attr('href')).toBe(
+      '/missions/design-the-journey'
+    )
+    expect($('.govuk-pagination__next a').attr('href')).toBe(
+      '/missions/build-the-journey'
+    )
+  })
+
+  test("Should show mission-specific help in an I'm stuck panel", async () => {
+    const $ = load(
+      (await server.inject({ method: 'GET', url: '/missions/ship-and-show' }))
+        .result
+    )
+    const stuck = $('[data-testid="app-stuck"]')
+
+    expect(stuck.find('.govuk-details__summary-text').text().trim()).toBe(
+      "I'm stuck"
+    )
+    expect(stuck.find('.app-stuck__problem')).toHaveLength(3)
+    expect(stuck.text()).toContain('Still stuck?')
+  })
+
+  test('Should send Mission 1 learners to the setup steps', async () => {
+    const $ = load(
+      (await server.inject({ method: 'GET', url: '/missions/gear-up' })).result
+    )
+    const button = $('[data-testid="app-setup"] a.govuk-button')
+
+    expect(button.attr('href')).toBe('/setup')
+    expect(button.text().trim()).toBe('Start setup')
+  })
+
+  test('Should not show setup on other missions', async () => {
+    const $ = load(
+      (await server.inject({ method: 'GET', url: '/missions/quality-gate' }))
+        .result
+    )
+
+    expect($('[data-testid="app-setup"]')).toHaveLength(0)
   })
 
   test('Should return page not found for an unknown mission', async () => {
@@ -140,7 +214,7 @@ describe('#missionsController', () => {
     await session.get('/missions/gear-up')
 
     const $ = load((await session.get('/missions')).payload)
-    expect($('#missions-1-status').text().trim()).toBe('In progress')
+    expect($('#missions-get-set-up-1-status').text().trim()).toBe('In progress')
   })
 
   test('Should show an error if not every check is ticked', async () => {
@@ -150,7 +224,7 @@ describe('#missionsController', () => {
     const $ = load(response.payload)
 
     expect(response.statusCode).toBe(statusCodes.badRequest)
-    expect($('title').text()).toContain('Error: Mission 0: Gear up')
+    expect($('title').text()).toContain('Error: Mission 1: Get set up')
     expect($('.govuk-error-summary a').attr('href')).toBe('#checks')
     expect($('#checks-error').text()).toContain(
       'Tick every check to show the mission worked'
@@ -182,12 +256,14 @@ describe('#missionsController', () => {
     expect(response.headers.location).toBe('/missions/gear-up/complete')
 
     const $ = load((await session.get('/missions/gear-up/complete')).payload)
-    expect($('.govuk-panel__title').text().trim()).toBe('Mission 0 complete')
+    expect($('.govuk-panel__title').text().trim()).toBe('Mission 1 complete')
     expect($('.govuk-panel__body').text()).toContain('Kitted out')
     expect($('a.govuk-button').attr('href')).toBe('/missions/meet-your-team')
 
     const missions$ = load((await session.get('/missions')).payload)
-    expect(missions$('#missions-1-status').text().trim()).toBe('Completed')
+    expect(missions$('#missions-get-set-up-1-status').text().trim()).toBe(
+      'Completed'
+    )
     expect(missions$('[data-testid="app-badges"]').text()).toContain(
       'Kitted out'
     )

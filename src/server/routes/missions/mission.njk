@@ -3,9 +3,10 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 {% from "govuk/components/tag/macro.njk" import govukTag %}
 
 {% block content %}
@@ -17,36 +18,54 @@
           errorList: errorList
         }) }}
       {% endif %}
-    </div>
-  </div>
 
-  {{ appHeading({
-    text: heading,
-    caption: caption
-  }) }}
+      <span class="govuk-caption-l">{{ caption }}</span>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ heading }}</h1>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      {% if isCompleted %}
-        <p class="govuk-body">{{ govukTag({ text: "Completed", classes: "govuk-tag--green" }) }}</p>
-      {% endif %}
+      <p class="govuk-body app-mission-meta" data-testid="app-mission-meta">
+        {{ mission.time }} · Badge: <strong>{{ mission.badge }}</strong>
+        {% if isCompleted %}
+          {{ govukTag({ text: "Completed", classes: "govuk-tag--green app-mission-meta__tag" }) }}
+        {% endif %}
+      </p>
 
       {% if leadTrack %}
         {{ govukInsetText({
-          html: "<p class=\"govuk-body\">As part of the <strong>" + (leadTrack.name | escape) + "</strong> track, you lead this mission.</p><p class=\"govuk-body\">Your stretch challenge: " + (leadTrack.stretch | escape) + "</p>"
+          html: "<p class=\"govuk-body\">This is one of the missions you lead, because of the kind of work you do.</p><p class=\"govuk-body\">Your extra challenge: " + (leadTrack.stretch | escape) + "</p>"
         }) }}
       {% endif %}
-
-      {{ govukSummaryList({ rows: summaryRows }) }}
-
-      <h2 class="govuk-heading-m">Say this to Claude</h2>
-      {% for prompt in mission.prompts %}
-        <pre class="app-code-block" data-testid="app-prompt"><code class="app-code">{{ prompt }}</code></pre>
-      {% endfor %}
 
       <div data-testid="app-mission-body">
         {{ mission.html | safe }}
       </div>
+
+      {% if mission.setup %}
+        <div id="setup" class="app-setup" data-testid="app-setup">
+          {{ govukButton({
+            text: setupCallToAction.text,
+            href: setupCallToAction.href,
+            isStartButton: not setupCallToAction.isFinished
+          }) }}
+        </div>
+      {% endif %}
+
+      {% set stuckHtml %}
+        {% if stuck.length %}
+          <dl class="app-stuck">
+            {% for item in stuck %}
+              <dt class="govuk-heading-s app-stuck__problem">{{ item.problem }}</dt>
+              <dd class="app-stuck__fix">{{ item.fixHtml | safe }}</dd>
+            {% endfor %}
+          </dl>
+        {% endif %}
+        <p class="govuk-body"><strong>Still stuck?</strong> Ask Claude: "I'm stuck. What should I check?" Or type <code class="app-code">/explain</code> to have Claude explain what just happened. You can also ask in your cohort channel. Everyone gets stuck sometimes.</p>
+      {% endset %}
+
+      {{ govukDetails({
+        summaryText: "I'm stuck",
+        html: stuckHtml,
+        attributes: { "data-testid": "app-stuck" }
+      }) }}
 
       <form action="/missions/{{ mission.slug }}" method="post" novalidate>
         <input type="hidden" name="crumb" value="{{ crumb }}">
@@ -60,7 +79,7 @@
         }) }}
       </form>
 
-      <p class="govuk-body"><a href="/missions" class="govuk-link">Back to your missions</a></p>
+      {{ govukPagination(pagination) }}
     </div>
   </div>
 {% endblock %}

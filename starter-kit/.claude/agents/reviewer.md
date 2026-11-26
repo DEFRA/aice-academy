@@ -3,7 +3,7 @@ name: reviewer
 description: Reviews changes for quality, security and Defra and GDS standards before the owner approves them. Use proactively at the end of every golden loop.
 tools: Read, Grep, Glob, Bash
 disallowedTools: Write, Edit
-model: opus
+model: sonnet
 skills:
   - cdp-conventions
 color: red

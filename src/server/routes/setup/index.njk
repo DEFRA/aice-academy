@@ -1,0 +1,53 @@
+{% extends 'layouts/page.njk' %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+
+{% block content %}
+  {{ appHeading({
+    text: heading,
+    caption: "Mission 1"
+  }) }}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body-l">Six short steps, about 25 minutes. We'll show you exactly what to do and what you'll see at each one.</p>
+
+      <p class="govuk-body">You'll get your own practice workspace that runs in your web browser. Nothing gets installed on your laptop, and you can't break anything real.</p>
+
+      <h2 class="govuk-heading-m">You'll need</h2>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>a laptop or desktop computer, with Chrome, Edge or Safari</li>
+        <li>about 25 minutes</li>
+        <li>the Claude account details your facilitator gave you</li>
+      </ul>
+
+      <ol class="app-step-list" data-testid="app-setup-steps">
+        {% for step in steps %}
+          <li class="app-step-list__item">
+            <span class="app-step-list__number" aria-hidden="true">{{ step.number }}</span>
+            <span class="app-step-list__text">
+              <a href="/setup/{{ step.slug }}" class="govuk-link">{{ step.title }}</a>
+              <span class="govuk-hint app-step-list__time">{{ step.time }}</span>
+            </span>
+            {% if step.isDone %}
+              {{ govukTag({ text: "Done", classes: "govuk-tag--green app-step-list__tag" }) }}
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+
+      {{ govukButton({
+        text: callToAction.text,
+        href: callToAction.href,
+        isStartButton: true
+      }) }}
+
+      {{ govukDetails({
+        summaryText: "Other ways to set up, for people who use technical tools",
+        html: '<p class="govuk-body">If you already use developer tools, you can set up on your own laptop instead.</p><ul class="govuk-list govuk-list--bullet"><li><a href="/setup/other/desktop-app" class="govuk-link">Set up in the Claude desktop app</a></li><li><a href="/setup/other/terminal" class="govuk-link">Set up in a terminal</a></li></ul>'
+      }) }}
+    </div>
+  </div>
+{% endblock %}

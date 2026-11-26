@@ -1,0 +1,44 @@
+{
+  "name": "AICE Academy practice",
+  "dockerComposeFile": "compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "24"
+    },
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
+  },
+  "overrideFeatureInstallOrder": [
+    "ghcr.io/devcontainers/features/node",
+    "ghcr.io/anthropics/devcontainer-features/claude-code"
+  ],
+  "forwardPorts": [3000, 3001],
+  "portsAttributes": {
+    "3000": {
+      "label": "Your service",
+      "onAutoForward": "openPreview"
+    },
+    "3001": {
+      "label": "Backend (Mission 8)",
+      "onAutoForward": "silent"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "8gb"
+  },
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["START-HERE.md"]
+    },
+    "vscode": {
+      "settings": {
+        "workbench.startupEditor": "none",
+        "markdown.preview.openMarkdownLinks": "inEditor"
+      }
+    }
+  }
+}

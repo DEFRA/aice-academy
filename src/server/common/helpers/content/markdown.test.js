@@ -1,10 +1,10 @@
-import { renderMarkdown } from './markdown.js'
+import { headingId, renderMarkdown } from './markdown.js'
 
 describe('#renderMarkdown', () => {
   test('Should add GOV.UK classes to headings, paragraphs and lists', () => {
     const html = renderMarkdown('## Title\n\nSome text.\n\n- one\n- two')
 
-    expect(html).toContain('<h2 class="govuk-heading-m">Title</h2>')
+    expect(html).toContain('<h2 id="title" class="govuk-heading-m">Title</h2>')
     expect(html).toContain('<p class="govuk-body">Some text.</p>')
     expect(html).toContain('<ul class="govuk-list govuk-list--bullet">')
   })
@@ -53,5 +53,39 @@ describe('#renderMarkdown', () => {
 
   test('Should return an empty string for no content', () => {
     expect(renderMarkdown()).toBe('')
+  })
+
+  test('Should give level 2 and 3 headings an id to link to', () => {
+    expect(renderMarkdown('### Meet your team')).toBe(
+      '<h3 id="meet-your-team" class="govuk-heading-s">Meet your team</h3>'
+    )
+  })
+
+  test('Should open links in a new tab only when the link text says so', () => {
+    const html = renderMarkdown(
+      '[Sign up (opens in new tab)](https://github.com/signup) and [read more](/glossary)'
+    )
+
+    expect(html).toContain(
+      '<a href="https://github.com/signup" class="govuk-link" target="_blank" rel="noreferrer noopener">Sign up (opens in new tab)</a>'
+    )
+    expect(html).toContain(
+      '<a href="/glossary" class="govuk-link">read more</a>'
+    )
+  })
+
+  test('Should not let authors set other link targets', () => {
+    const html = renderMarkdown('<a href="/x" target="_top">x</a>')
+
+    expect(html).toBe(
+      '<p class="govuk-body"><a href="/x" class="govuk-link">x</a></p>'
+    )
+  })
+})
+
+describe('#headingId', () => {
+  test('Should make a readable id from heading text', () => {
+    expect(headingId("What you'll do")).toBe('what-you-ll-do')
+    expect(headingId('What you&#39;ll do')).toBe('what-you-ll-do')
   })
 })

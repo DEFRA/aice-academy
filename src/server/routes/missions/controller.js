@@ -6,12 +6,14 @@ import {
   getMission,
   getMissions,
   getNextMission,
-  getProfession
+  getProfession,
+  getSetupSteps
 } from '#/server/common/helpers/content/content.js'
 import { buildFormErrors } from '#/server/common/helpers/form-errors.js'
 import {
   completeMission,
   countCompleted,
+  findNextMission,
   getMissionStatus,
   getProgress,
   missionStatus,
@@ -60,15 +62,45 @@ export function buildTaskListItems(missions, progress) {
       title: { text: `Mission ${mission.number}: ${mission.title}` },
       href: `/missions/${mission.slug}`,
       hint: {
-        text: `Badge: ${mission.badge}${leads ? '. You lead this mission' : ''}`
+        text: `${mission.summary} ${mission.time}.${leads ? ' You lead this one.' : ''}`
       },
       status: statusLabels[getMissionStatus(progress, mission.slug)]
     }
   })
 }
 
+export const stages = ['Get set up', 'Plan', 'Build', 'Finish']
+
+/**
+ * Missions grouped into the four stages of the journey.
+ */
+export function buildStages(missions, progress) {
+  return stages.map((name) => {
+    const inStage = missions.filter((mission) => mission.stage === name)
+
+    return {
+      name,
+      id: name.toLowerCase().replaceAll(' ', '-'),
+      items: buildTaskListItems(inStage, progress)
+    }
+  })
+}
+
+function setupCallToAction(setupStep = 0) {
+  const stepCount = getSetupSteps().length
+
+  if (setupStep >= stepCount) {
+    return { text: 'Review the setup steps', href: '/setup', isFinished: true }
+  }
+
+  return setupStep > 0
+    ? { text: `Continue setup: step ${setupStep + 1}`, href: '/setup' }
+    : { text: 'Start setup', href: '/setup' }
+}
+
 export function missionViewModel(mission, progress, form = {}) {
   const { ticked = [], reflection, errors = {} } = form
+  const missions = getMissions()
   const saved = progress.missions[mission.slug] ?? {}
   const isCompleted = saved.status === missionStatus.completed
   const profession = getProfession(progress.profession)
@@ -77,34 +109,33 @@ export function missionViewModel(mission, progress, form = {}) {
     isCompleted && !form.ticked
       ? mission.checks.map((_, i) => String(i))
       : ticked
+  const previous = missions.find(({ number }) => number === mission.number - 1)
+  const next = missions.find(({ number }) => number === mission.number + 1)
 
   return {
     pageTitle: `${hasErrors ? 'Error: ' : ''}Mission ${mission.number}: ${mission.title}`,
     heading: mission.title,
-    caption: `Mission ${mission.number}`,
+    caption: `Mission ${mission.number} of ${missions.length}: ${mission.stage}`,
     breadcrumbs: missionBreadcrumbs(mission),
     mission,
     isCompleted,
     errorList: errors.errorList,
     leadTrack:
       profession && mission.lead.includes(profession.id) ? profession : null,
-    summaryRows: [
-      { key: { text: "You'll build" }, value: { text: mission.build } },
-      { key: { text: "You'll learn" }, value: { text: mission.learn } },
-      { key: { text: 'Your team' }, value: { text: mission.team } },
-      { key: { text: 'Time' }, value: { text: mission.time } },
-      { key: { text: 'Badge' }, value: { text: mission.badge } }
-    ],
+    setupCallToAction: mission.setup
+      ? setupCallToAction(progress.setupStep)
+      : undefined,
+    stuck: mission.stuck,
     checks: {
       idPrefix: 'checks',
       name: 'checks',
       fieldset: {
         legend: {
-          text: "You'll know it worked when",
+          text: 'Check it worked',
           classes: 'govuk-fieldset__legend--m'
         }
       },
-      hint: { text: 'Tick each one when it is true.' },
+      hint: { text: 'Tick each one when it is true for you.' },
       errorMessage: errors.fieldErrors?.checks,
       items: mission.checks.map((text, index) => ({
         value: String(index),
@@ -117,12 +148,28 @@ export function missionViewModel(mission, progress, form = {}) {
       name: 'reflection',
       maxlength: reflectionMaxLength,
       label: {
-        text: `Team huddle: ${mission.huddle}`,
+        text: `Reflect: ${mission.huddle}`,
         classes: 'govuk-label--m'
       },
-      hint: { text: 'Optional. Write a few words to bring to your cohort.' },
+      hint: {
+        text: 'Optional. A few words help you remember what you learned, and give you something to share with your cohort.'
+      },
       value: reflection ?? saved.reflection,
       errorMessage: errors.fieldErrors?.reflection
+    },
+    pagination: {
+      previous: previous
+        ? {
+            href: `/missions/${previous.slug}`,
+            labelText: `Mission ${previous.number}: ${previous.title}`
+          }
+        : undefined,
+      next: next
+        ? {
+            href: `/missions/${next.slug}`,
+            labelText: `Mission ${next.number}: ${next.title}`
+          }
+        : undefined
     }
   }
 }
@@ -132,6 +179,7 @@ export const missionsController = {
     const missions = getMissions()
     const progress = getProgress(request)
     const completedCount = countCompleted(progress)
+    const nextMission = findNextMission(missions, progress)
 
     return h.view('missions/index', {
       pageTitle: 'Your missions',
@@ -139,7 +187,9 @@ export const missionsController = {
       breadcrumbs: [{ text: 'Home', href: '/' }, { text: 'Missions' }],
       missionCount: missions.length,
       completedCount,
-      hasGraduated: completedCount === missions.length,
+      hasGraduated: !nextMission,
+      nextMission,
+      hasStarted: completedCount > 0,
       profession: getProfession(progress.profession),
       badges: missions
         .filter(
@@ -147,7 +197,7 @@ export const missionsController = {
             getMissionStatus(progress, mission.slug) === missionStatus.completed
         )
         .map((mission) => mission.badge),
-      taskListItems: buildTaskListItems(missions, progress)
+      stages: buildStages(missions, progress)
     })
   }
 }

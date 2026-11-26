@@ -1,30 +1,137 @@
-- term: Claude Code
-  meaning: Claude working in your project folder. It can read files, write code and run commands, with your permission.
+# Plain-English meanings for words learners meet. Missions link to /glossary#<id>.
+- id: acceptance-criteria
+  term: Acceptance criteria
+  meaning: "A clear description of how we'll know a user story works, often written as Given, When, Then."
+  comparison: The checklist a builder and customer agree on before work starts.
+- id: accessibility
+  term: Accessibility
+  meaning: Making sure everyone can use a service, including people who are disabled or use assistive technology.
+  comparison: A ramp as well as steps.
+- id: agent
+  term: Agent (AI teammate)
+  meaning: A version of Claude given one job, its own instructions and the tools for that job. Your team has seven.
+  comparison: A colleague with one specialism.
+- id: backend
+  term: Backend
+  meaning: The part of a service people don't see. It saves and looks up information.
+  comparison: The kitchen in a restaurant.
+- id: branch
+  term: Branch
+  meaning: A separate line of work in a repository, so you can change things without affecting the main version.
+  comparison: A copy of a document you edit before merging changes back.
+- id: cdp
+  term: CDP (Core Delivery Platform)
+  meaning: Defra's shared platform for building and running digital services. It provides starting points, hosting and checks.
+  comparison: A business park with the power, water and security already in.
+- id: claude-code
+  term: Claude Code
+  meaning: Claude working inside your project, where it can read and change files and run commands, with your permission.
   comparison: A colleague at your keyboard who asks before touching anything.
-- term: CLAUDE.md
-  meaning: A file of rules and context Claude reads at the start of every session.
-  comparison: The team handbook.
-- term: Subagent
-  meaning: A specialist with its own instructions, tools and focus.
-  comparison: A teammate with one job they're great at.
-- term: Skill
-  meaning: A saved playbook Claude can follow, often started with a slash command like /golden-loop.
-  comparison: A recipe card.
-- term: Hook
-  meaning: A rule that runs automatically at a set moment, every time.
-  comparison: A smoke alarm. You don't switch it on, it's always watching.
-- term: Plan mode
-  meaning: Claude explains its plan and waits before changing anything. Press Shift+Tab to turn it on.
-  comparison: Measure twice, cut once.
-- term: CDP template
-  meaning: Defra's ready-made starting point for a service, with hosting, logging and pipelines already set up.
-  comparison: A house kit with the plumbing already in.
-- term: GOV.UK Frontend
-  meaning: The tested, accessible building blocks for government pages, such as buttons, radios and error messages.
+- id: claude-md
+  term: CLAUDE.md (the team handbook)
+  meaning: A file of rules and background Claude reads every time it starts.
+  comparison: A team handbook every new starter reads.
+- id: codespace
+  term: Codespace
+  meaning: A ready-made computer from GitHub that runs in a browser tab. Your practice service lives in one.
+  comparison: A fully equipped desk you can use from any computer.
+- id: command
+  term: Command
+  meaning: An instruction you type into a terminal, such as npm run dev.
+  comparison: Telling a lift which floor to go to.
+- id: commit
+  term: Commit (checkpoint)
+  meaning: A saved checkpoint of your work, with a short note saying what changed.
+  comparison: Saving a new version of a document.
+- id: database
+  term: Database
+  meaning: Where a service stores information so it isn't lost. Your service uses one called MongoDB.
+  comparison: A filing cabinet.
+- id: design-system
+  term: GOV.UK Design System
+  meaning: Ready-made, tested building blocks for government web pages, such as buttons, questions and error messages.
   comparison: Building bricks that already meet building regulations.
-- term: Test
-  meaning: A small program that checks one thing works, and fails if it breaks.
-  comparison: A checklist that ticks itself.
-- term: Golden loop
-  meaning: "The way every feature is built: story, failing test, build, check, then you approve."
+- id: fork
+  term: Fork
+  meaning: Your own copy of someone else's repository on GitHub, which you can change and share.
+  comparison: Photocopying a form so you can fill in your own.
+- id: frontend
+  term: Frontend
+  meaning: The part of a service people see and use, such as the pages and questions.
+  comparison: The dining room in a restaurant.
+- id: github
+  term: GitHub
+  meaning: A website where people keep, share and review code. Defra keeps its services' code there.
+  comparison: A shared drive built for code.
+- id: golden-loop
+  term: Golden loop
+  meaning: "How your team builds every feature: agree what good looks like, write a test that fails, build until it passes, check, then you approve."
   comparison: Check the smoke alarm beeps before you trust it.
+- id: hook
+  term: Hook (automatic check)
+  meaning: A rule that runs automatically at a set moment, such as running the tests every time Claude changes a file.
+  comparison: A smoke alarm. You don't switch it on, it's always watching.
+- id: localhost
+  term: Localhost
+  meaning: The address a computer uses to talk to itself. Your service runs at localhost on port 3000.
+  comparison: Calling your own phone number.
+- id: node
+  term: Node.js and npm
+  meaning: Node.js is the software your service runs on. npm installs the building blocks it needs and runs tasks, such as npm test.
+  comparison: An engine, and the parts catalogue that comes with it.
+- id: permission
+  term: Permission request
+  meaning: Claude asks before doing anything important, such as changing a file or running a command. You choose yes or no.
+  comparison: A colleague checking before they send an email for you.
+- id: pipeline
+  term: Pipeline
+  meaning: Automatic checks that run whenever work is shared, such as security checks and tests.
+  comparison: Airport security for code.
+- id: plan-mode
+  term: Plan mode
+  meaning: A setting where Claude explains what it'll do and waits for you before changing anything.
+  comparison: Measure twice, cut once.
+- id: port
+  term: Port
+  meaning: A numbered doorway on a computer. Your service uses port 3000 and the backend uses 3001.
+  comparison: Flat numbers in one building.
+- id: prompt
+  term: Prompt
+  meaning: The message you send to Claude.
+  comparison: A brief you give a colleague.
+- id: pull-request
+  term: Pull request
+  meaning: A request to add your changes to the main version, where people and automatic checks can review them first.
+  comparison: Sending a draft for sign-off.
+- id: repository
+  term: Repository (repo)
+  meaning: A project's folder of code and its full history, usually kept on GitHub.
+  comparison: A project folder that remembers every version.
+- id: screen-reader
+  term: Screen reader
+  meaning: Software that reads a screen aloud, used by people who are blind or have low vision.
+  comparison: An audiobook for web pages.
+- id: skill
+  term: Skill
+  meaning: A saved set of instructions Claude can follow, such as the golden loop.
+  comparison: A recipe card.
+- id: slash-command
+  term: Slash command
+  meaning: A shortcut starting with /, such as /academy or /golden-loop, that tells Claude to follow a skill.
+  comparison: A speed-dial button.
+- id: template
+  term: Template (CDP frontend template)
+  meaning: Defra's ready-made starting point for a service, with GOV.UK styling, tests and security already set up.
+  comparison: A house kit with the plumbing already in.
+- id: terminal
+  term: Terminal
+  meaning: A window where you type instructions for the computer and see its replies as text.
+  comparison: Texting the computer.
+- id: test
+  term: Test
+  meaning: A small program that checks one thing works. It passes if it does, and fails if it doesn't.
+  comparison: A checklist that ticks itself.
+- id: user-story
+  term: User story
+  meaning: "A short description of what someone needs and why, such as: as someone who's seen a hedgehog, I need to say where, so the team can plan."
+  comparison: A customer's order, written down.

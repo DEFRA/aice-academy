@@ -1,8 +1,8 @@
 {% extends 'layouts/page.njk' %}
 
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/task-list/macro.njk" import govukTaskList %}
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
-{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 {% from "govuk/components/tag/macro.njk" import govukTag %}
 
 {% block content %}
@@ -18,19 +18,26 @@
           titleText: "You've graduated",
           html: "You're an <strong>AI-native builder</strong>"
         }) }}
+      {% else %}
+        <div class="app-next" data-testid="app-next">
+          <p class="govuk-body govuk-!-margin-bottom-2">{{ "Up next" if hasStarted else "Start here" }}</p>
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Mission {{ nextMission.number }}: {{ nextMission.title }}</h2>
+          <p class="govuk-body">{{ nextMission.summary }} {{ nextMission.time }}.</p>
+          {{ govukButton({
+            text: ("Continue" if hasStarted else "Start") + " Mission " + nextMission.number,
+            href: "/missions/" + nextMission.slug,
+            classes: "govuk-!-margin-bottom-0"
+          }) }}
+        </div>
       {% endif %}
 
       <p class="govuk-body" data-testid="app-progress">You have completed {{ completedCount }} of {{ missionCount }} missions.</p>
 
       {% if profession %}
         <p class="govuk-body" data-testid="app-track">
-          Your track: <strong>{{ profession.name }}</strong>.
-          <a href="/profession" class="govuk-link">Change<span class="govuk-visually-hidden"> your profession</span></a>
+          Your work: <strong>{{ profession.name }}</strong>.
+          <a href="/profession" class="govuk-link">Change<span class="govuk-visually-hidden"> the kind of work you do</span></a>
         </p>
-      {% else %}
-        {{ govukInsetText({
-          html: '<a href="/profession" class="govuk-link">Choose your profession</a> to see which missions you lead.'
-        }) }}
       {% endif %}
 
       {% if badges.length %}
@@ -42,10 +49,13 @@
         </ul>
       {% endif %}
 
-      {{ govukTaskList({
-        idPrefix: "missions",
-        items: taskListItems
-      }) }}
+      {% for stage in stages %}
+        <h2 class="govuk-heading-m app-stage-heading" id="stage-{{ stage.id }}">Stage {{ loop.index }}: {{ stage.name }}</h2>
+        {{ govukTaskList({
+          idPrefix: "missions-" + stage.id,
+          items: stage.items
+        }) }}
+      {% endfor %}
     </div>
   </div>
 {% endblock %}
